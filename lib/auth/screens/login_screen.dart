@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:salaty/auth/screens/sign_up.dart';
 import 'package:salaty/theme/colors.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -43,10 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 decoration: InputDecoration(
                   hintText: "Enter your email or phone",
-        
                   prefixIcon: const Icon(Icons.email_outlined),
                   filled: true,
-                  fillColor: Colors.grey[200],
+                  fillColor: Color(0xfff1f5f9),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: const BorderSide(color: Colors.blue, width: 2),
@@ -71,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: const Icon(Icons.visibility_outlined),
                   filled: true,
-                  fillColor: Colors.grey[200],
+                  fillColor: Color(0xfff1f5f9),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: const BorderSide(color: Colors.blue, width: 2),
@@ -100,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),),
                   onPressed: () {}, child: Text('Sign in', style: TextStyle(color: Colors.white),),),
               ),
-              const SizedBox(height: 400),
+              const SizedBox(height: 100),
 
                 /// Sign up
                 Center(
@@ -109,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Text("Don't have an account? "),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {Get.to(SignUp());},
                         child: const Text(
                           "Sign Up",
                           style: TextStyle(

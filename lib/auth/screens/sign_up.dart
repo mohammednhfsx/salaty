@@ -58,13 +58,13 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 20),
               //Email
               Text(
-                "Email",
+                "Email or phone",
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
-                  hintText: 'Enter your Email',
+                  hintText: 'Enter your Email or phone',
                   filled: true,
                   fillColor: Color(0xfff1f5f9),
                   prefixIcon: Icon(Icons.email_outlined),

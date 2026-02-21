@@ -17,7 +17,15 @@ class Mytranslation extends Translations {
       "Forget_password": "نسيت كلمة المرور؟",
       "Sign_in": "تسجيل الدخول",
       "Don't_have_an_account?": "ليس لديك حساب؟",
-      "Sign_Up":"إنشاء حساب",
+      "Sign_Up": "إنشاء حساب",
+      "Create_Account": "إنشاء حساب",
+      "Sign_up_to_start_shopping": "التسجيل لبدء التسوق",
+      "Full_Name": "الاسم الكامل",
+      "Enter_your_Full_name": "أدخل اسمك الكامل",
+      "Confrim_password": "تأكيد كلمة المرور",
+      "Enter_your_Confrim_password": "أدخل كلمة مرور التأكيد الخاصة بك",
+      "Already_have_an_account":"لدي حساب بالفعل؟",
+
     },
 
     "en": {
@@ -35,6 +43,14 @@ class Mytranslation extends Translations {
       "Sign_in": "Sign in",
       "Don't_have_an_account? ": "Don't have an account? ",
       "Sign_Up": "Sign Up",
+      "Create_Account": "Create Account",
+      "Sign_up_to_start_shopping": "Sign up to start shopping ",
+      "Full_Name": "Full Name",
+      "Enter_your_Full_name": "Enter your Full name",
+      "Confrim_password": "Confrim password",
+      "Enter_your_Confrim_password": "Enter your Confrim password",
+      "Already_have_an_account":"Already have an account?",
+      
     },
   };
 }

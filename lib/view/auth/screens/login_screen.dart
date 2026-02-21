@@ -118,7 +118,7 @@ class LoginScreen extends GetView<LocaleController> {
                       onTap: () {
                         Get.to(SignUp());
                       },
-                      child:  Text(
+                      child:   Text(
                         "Sign_Up".tr,
                         style: TextStyle(
                           color: Colors.blue,

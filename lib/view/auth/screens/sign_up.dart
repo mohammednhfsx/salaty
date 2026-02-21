@@ -24,24 +24,24 @@ class _SignUpState extends State<SignUp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Create Account",
+                "Create_Account".tr,
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               Text(
-                "Sign up to start shopping ",
+                "Sign_up_to_start_shopping".tr,
                 style: TextStyle(fontSize: 17, color: Colors.grey),
               ),
               SizedBox(height: 50),
 
               //fullname
               Text(
-                "Full Name",
+                "Full_Name".tr,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
-                  hintText: "Enter your Full name",
+                  hintText: "Enter_your_Full_name".tr,
                   prefixIcon: Icon(Icons.person_outlined),
                   filled: true,
                   fillColor: Color(0xfff1f5f9),
@@ -58,13 +58,13 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 20),
               //Email
               Text(
-                "Email or phone",
+                "Email_or_phone".tr,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
-                  hintText: 'Enter your Email or phone',
+                  hintText: "Enter_your_email_or_phone".tr,
                   filled: true,
                   fillColor: Color(0xfff1f5f9),
                   prefixIcon: Icon(Icons.email_outlined),
@@ -81,14 +81,14 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 20),
 
               //password
-              const Text(
-                "password",
+              Text(
+                "password".tr,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               TextField(
                 decoration: InputDecoration(
-                  hintText: "Enter your password",
+                  hintText: "Enter_your_password".tr,
 
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: const Icon(Icons.visibility_outlined),
@@ -108,14 +108,14 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 20),
 
               //Confrim password
-              const Text(
-                "Confrim password",
+              Text(
+                "Confrim_password".tr,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               TextField(
                 decoration: InputDecoration(
-                  hintText: "Enter your Confrim password",
+                  hintText: "Enter_your_Confrim_password".tr,
 
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: const Icon(Icons.visibility_outlined),
@@ -142,9 +142,11 @@ class _SignUpState extends State<SignUp> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: () {Get.to(HomePage());},
+                  onPressed: () {
+                    Get.to(HomePage());
+                  },
                   child: Text(
-                    'Sign Up',
+                    "Create_Account".tr,
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
@@ -154,13 +156,13 @@ class _SignUpState extends State<SignUp> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account?  "),
+                     Text(  "Already_have_an_account".tr),
                     GestureDetector(
                       onTap: () {
                         Get.to(LoginScreen());
                       },
-                      child: const Text(
-                        "Sign Up",
+                      child:  Text(
+                        "Sign_in".tr,
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,

@@ -5,7 +5,7 @@ class CustomLangChoose extends StatelessWidget {
     final String text;
     final void Function()?onPressed;
    final  bool isSelected;
-   CustomLangChoose({super.key, required this.text, this.onPressed, required  this.isSelected});
+   const CustomLangChoose({super.key, required this.text, this.onPressed, required  this.isSelected});
 
 
   @override

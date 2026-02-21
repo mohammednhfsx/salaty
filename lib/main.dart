@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/core/localization/lang/local_change.dart';
+import 'package:salaty/core/localization/local_change.dart';
 import 'package:salaty/view/auth/screens/splash_screen.dart';
-import 'package:salaty/core/localization/translation.dart';
+import 'package:salaty/core/localization/lang/translation.dart';
 import 'package:salaty/core/services/services.dart';
 
 void main()async {

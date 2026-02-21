@@ -29,7 +29,7 @@ class Mytranslation extends Translations {
     },
 
     "en": {
-      "Choose_lang": "choose language",
+      "Choose_lang": "Choose language",
       "En": "English",
       "Ar": "Arabic",
       "Next": "Next",

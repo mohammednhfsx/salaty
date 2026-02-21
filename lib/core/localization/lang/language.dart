@@ -1,56 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
-import 'package:salaty/core/localization/lang/local_change.dart';
+import 'package:salaty/core/localization/local_change.dart';
 import 'package:salaty/core/localization/lang/widgets/custom_lang_choose.dart';
 import 'package:salaty/theme/colors.dart';
 import 'package:salaty/view/auth/screens/login_screen.dart';
 
 class Language extends GetView<LocaleController>{
-  const Language({super.key});
+  
+   Language({super.key});
+ 
 
  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: splash_screenColors,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Container(
         padding: EdgeInsets.only(top: 100),
         child: Column(
           children: [
             Text(
             "Choose_lang".tr,
-              style: TextStyle(fontSize: 25, color: Colors.white),
+              style: TextStyle(fontSize: 25, color: const Color.fromARGB(255, 14, 12, 12)),
             ),
+             SizedBox(height: 200,width: 200,
+              child: Lottie.asset('assets/lottile/lottile.json')),
+
+
             SizedBox(height: 100),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomLangChoose(text: "En".tr,onPressed: () {
-                  controller.changeLang("en");
-                  
-                },), 
-                SizedBox(width: 25),
-                CustomLangChoose(text: "Ar".tr , onPressed: () {
-                                    controller.changeLang("ar");
-                  
-                },      ),
-              ],
-            ),
-            SizedBox(height: 25),
+          Obx(() => Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    CustomLangChoose(
+      text: "Ar".tr,
+      isSelected: controller.selectedLang.value == "ar",
+      onPressed: () => controller.changeLang("ar"),
+    ),
+    SizedBox(width: 25),
+    CustomLangChoose(
+      text: "En".tr,
+      isSelected: controller.selectedLang.value == "en",
+      onPressed: () => controller.changeLang("en"),
+    ),
+  ],
+)),
+            SizedBox(height: 200),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,),
               onPressed: () {
                 Get.to(LoginScreen());
               },
               child: Text(
                 "Next".tr,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: const Color.fromARGB(255, 247, 245, 245),
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+
+             
           ],
         ),
       ),

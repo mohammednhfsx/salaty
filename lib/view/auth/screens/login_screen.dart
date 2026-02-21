@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/core/localization/lang/local_change.dart';
+import 'package:salaty/core/localization/local_change.dart';
 
 import 'package:salaty/view/auth/screens/sign_up.dart';
 import 'package:salaty/theme/colors.dart';

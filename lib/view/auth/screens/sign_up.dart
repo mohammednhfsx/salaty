@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:salaty/auth/screens/login_screen.dart';
+import 'package:salaty/view/auth/screens/login_screen.dart';
 import 'package:salaty/theme/colors.dart';
 import 'package:salaty/view/screen/home_page.dart';
 

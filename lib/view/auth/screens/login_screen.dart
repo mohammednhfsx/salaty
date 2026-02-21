@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:salaty/auth/screens/sign_up.dart';
+import 'package:salaty/view/auth/screens/sign_up.dart';
 import 'package:salaty/theme/colors.dart';
 
 class LoginScreen extends StatefulWidget {

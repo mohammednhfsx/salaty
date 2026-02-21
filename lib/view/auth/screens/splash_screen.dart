@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:salaty/auth/screens/login_screen.dart';
+import 'package:salaty/core/localization/lang/language.dart';
+
 import 'package:salaty/theme/colors.dart';
 class SplashScreen extends StatefulWidget {
 const SplashScreen({super.key});
@@ -15,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   
     super.initState();
     Timer(Duration(seconds: 3), (){
-      Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginScreen())) ;
+      Navigator.push(context,MaterialPageRoute(builder: (context)=>Language())) ;
     });
   }
   @override

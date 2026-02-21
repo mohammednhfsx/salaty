@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/auth/screens/splash_screen.dart';
+import 'package:salaty/view/auth/screens/splash_screen.dart';
+import 'package:salaty/core/localization/translation.dart';
+import 'package:salaty/core/services/services.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initialServices();
+
   runApp(const MyApp());
 }
 
@@ -12,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return GetMaterialApp(translations: Mytranslation(),
     home: SplashScreen(),
  
     );

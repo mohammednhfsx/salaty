@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/controller/auth/forgot_password_controller.dart';
 
 import 'package:salaty/core/localization/local_change.dart';
 
@@ -8,11 +7,10 @@ import 'package:salaty/theme/colors.dart';
 import 'package:salaty/view/auth/widgets/custom_text_body.dart';
 import 'package:salaty/view/auth/widgets/custom_text_lable.dart';
 import 'package:salaty/view/auth/widgets/custom_text_title.dart';
-import 'package:salaty/view/auth/widgets/custom_textfield.dart';
 
 // ignore: must_be_immutable
 class Verifycode extends GetView<LocaleController> {
-  Verifycode({super.key});
+  const Verifycode({super.key});
   // ForgotPasswordControllerImp conroller = Get.put(ForgotPasswordControllerImp());
 
   @override
@@ -47,7 +45,7 @@ class Verifycode extends GetView<LocaleController> {
               //   hintText: "Enter_your_email_or_phone".tr,
               //   prefixIcon: Icons.email_outlined,
               // ),
-                  const SizedBox(height: 50),
+              const SizedBox(height: 50),
 
               SizedBox(
                 width: double.infinity,
@@ -62,7 +60,7 @@ class Verifycode extends GetView<LocaleController> {
                   onPressed: () {},
                   child: Text(
                     "check".tr,
-                    style: TextStyle(color: Colors.white,fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),

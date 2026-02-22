@@ -31,7 +31,7 @@ class ForgetPassword extends GetView<LocaleController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Forgot_Password
-              CustomTextTitle(text: "Forgot_Password?".tr),
+              CustomTextTitle(text: "Forgot_Password".tr),
 
               const SizedBox(height: 5),
               // Enter_your_email_forgot

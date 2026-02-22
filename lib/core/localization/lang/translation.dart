@@ -26,7 +26,9 @@ class Mytranslation extends Translations {
       "Enter_your_Confrim_password": "أدخل كلمة مرور التأكيد الخاصة بك",
       "Already_have_an_account": "لدي حساب بالفعل؟",
       "Forgot_Password": "هل نسيت كلمة المرور؟",
-            "Enter_your_email_forgot":"أدخل عنوان بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك"
+      "Enter_your_email_forgot":
+          "أدخل عنوان بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك",
+      "check": "تحقق",
     },
 
     "en": {
@@ -52,7 +54,9 @@ class Mytranslation extends Translations {
       "Enter_your_Confrim_password": "Enter your Confrim password",
       "Already_have_an_account": "Already have an account?",
       "Forgot_Password": "Forgot Password?",
-      "Enter_your_email_forgot":"Enter your email address and we'll send you a link to reset your password"
+      "Enter_your_email_forgot":
+          "Enter your email address and we'll send you a link to reset your password",
+      "check": "check",
     },
   };
 }

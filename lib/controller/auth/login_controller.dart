@@ -13,7 +13,8 @@ import 'package:salaty/view/auth/screens/sign_up.dart';
 class LoginControllerImp extends LoginController{
  late TextEditingController email;
 late TextEditingController password;
- void goToforgotpassword(){
+ @override
+  void goToforgotpassword(){
       Get.to(ForgetPassword());
 
  }

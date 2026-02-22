@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salaty/controller/auth/sign_up_controller.dart';
 
-import 'package:salaty/view/auth/screens/login_screen.dart';
 import 'package:salaty/theme/colors.dart';
 import 'package:salaty/view/screen/home_page.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class SignUp extends StatelessWidget {
+  SignUp({super.key});
+  final SignUpControllerImp controllerImp = Get.put(SignUpControllerImp());
 
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +36,7 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 10),
               TextField(
+                controller: controllerImp.fullName,
                 decoration: InputDecoration(
                   hintText: "Enter_your_Full_name".tr,
                   prefixIcon: Icon(Icons.person_outlined),
@@ -63,6 +60,7 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 10),
               TextField(
+                controller: controllerImp.email,
                 decoration: InputDecoration(
                   hintText: "Enter_your_email_or_phone".tr,
                   filled: true,
@@ -87,6 +85,7 @@ class _SignUpState extends State<SignUp> {
               ),
               const SizedBox(height: 8),
               TextField(
+                controller: controllerImp.password,
                 decoration: InputDecoration(
                   hintText: "Enter_your_password".tr,
 
@@ -108,29 +107,29 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 20),
 
               //Confrim password
-              Text(
-                "Confrim_password".tr,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Enter_your_Confrim_password".tr,
+              // Text(
+              //   "Confrim_password".tr,
+              //   style: TextStyle(fontWeight: FontWeight.bold),
+              // ),
+              // const SizedBox(height: 8),
+              // TextField(
+              //   decoration: InputDecoration(
+              //     hintText: "Enter_your_Confrim_password".tr,
 
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  suffixIcon: const Icon(Icons.visibility_outlined),
-                  filled: true,
-                  fillColor: Color(0xfff1f5f9),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Colors.blue, width: 2),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
+              //     prefixIcon: const Icon(Icons.lock_outline),
+              //     suffixIcon: const Icon(Icons.visibility_outlined),
+              //     filled: true,
+              //     fillColor: Color(0xfff1f5f9),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(15),
+              //       borderSide: const BorderSide(color: Colors.blue, width: 2),
+              //     ),
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(15),
+              //       borderSide: BorderSide.none,
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -156,12 +155,12 @@ class _SignUpState extends State<SignUp> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Text(  "Already_have_an_account".tr),
+                    Text("Already_have_an_account".tr),
                     GestureDetector(
                       onTap: () {
-                        Get.to(LoginScreen());
+                        controllerImp.goToSignIn();
                       },
-                      child:  Text(
+                      child: Text(
                         "Sign_in".tr,
                         style: TextStyle(
                           color: Colors.blue,

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salaty/controller/auth/login_controller.dart';
 import 'package:salaty/core/localization/local_change.dart';
 
-import 'package:salaty/view/auth/screens/sign_up.dart';
-import 'package:salaty/theme/colors.dart';
 
+import 'package:salaty/theme/colors.dart';
+import 'package:salaty/view/auth/widgets/custom_text_body.dart';
+import 'package:salaty/view/auth/widgets/custom_text_lable.dart';
+import 'package:salaty/view/auth/widgets/custom_text_title.dart';
+import 'package:salaty/view/auth/widgets/custom_textfield.dart';
+
+// ignore: must_be_immutable
 class LoginScreen extends GetView<LocaleController> {
-  const LoginScreen({super.key});
+   LoginScreen({super.key});
+  LoginControllerImp conroller = Get.put(LoginControllerImp());
 
   @override
   Widget build(BuildContext context) {
@@ -23,75 +30,48 @@ class LoginScreen extends GetView<LocaleController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Welcome_Back".tr,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-              ),
+              //Welcome Back
+              CustomTextTitle(text: "Welcome_Back".tr),
+
               const SizedBox(height: 5),
-              Text(
-                "Sign_in_to_continue_shopping".tr,
-                style: TextStyle(color: Colors.grey[600], fontSize: 18),
+              // Sign in to continue shopping
+              CustomTextBody(textbody: "Sign_in_to_continue_shopping".tr),
+
+              const SizedBox(height: 50),
+              //  Email
+              CustomTextLable(textLable: "Email_or_phone".tr),
+
+              const SizedBox(height: 8),
+              CustomTextfield(controllertextfield: conroller.email,
+                hintText: "Enter_your_email_or_phone".tr,
+                prefixIcon: Icons.email_outlined,
               ),
 
-              const SizedBox(height: 25),
-              //  Email
-              Text(
-                "Email_or_phone".tr,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Enter_your_email_or_phone".tr,
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  filled: true,
-                  fillColor: Color(0xfff1f5f9),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Colors.blue, width: 2),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
               const SizedBox(height: 20),
               //password
-              Text(
-                "password".tr,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Enter_your_password".tr,
+              CustomTextLable(textLable: "password".tr),
 
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  suffixIcon: const Icon(Icons.visibility_outlined),
-                  filled: true,
-                  fillColor: Color(0xfff1f5f9),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Colors.blue, width: 2),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
+              const SizedBox(height: 8),
+              CustomTextfield(controllertextfield: conroller.password,
+                hintText: "Enter_your_password".tr,
+                prefixIcon: Icons.lock_outline,
+                suffixIcon: Icons.visibility_outlined,
               ),
+
               //forget password
               Align(
                 alignment: AlignmentGeometry.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    conroller.goToforgotpassword();
+                  },
                   child: Text(
-                "Forget_password".tr,
+                    "Forget_password".tr,
                     style: TextStyle(color: splash_screenColors),
                   ),
                 ),
               ),
+              SizedBox(height: 50),
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -103,7 +83,10 @@ class LoginScreen extends GetView<LocaleController> {
                     ),
                   ),
                   onPressed: () {},
-                  child: Text("Sign_in".tr,style: TextStyle(color: Colors.white)),
+                  child: Text(
+                    "Sign_in".tr,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               const SizedBox(height: 100),
@@ -113,12 +96,12 @@ class LoginScreen extends GetView<LocaleController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Text("Don't_have_an_account?".tr),
+                    Text("Don't_have_an_account?".tr),
                     GestureDetector(
                       onTap: () {
-                        Get.to(SignUp());
+                        conroller.goToSignUp();
                       },
-                      child:   Text(
+                      child: Text(
                         "Sign_Up".tr,
                         style: TextStyle(
                           color: Colors.blue,

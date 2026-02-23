@@ -13,7 +13,9 @@ import 'package:salaty/view/auth/widgets/custom_textfield.dart';
 // ignore: must_be_immutable
 class ForgetPassword extends GetView<LocaleController> {
   ForgetPassword({super.key});
-  ForgotPasswordControllerImp conroller = Get.put(ForgotPasswordControllerImp());
+  ForgotPasswordControllerImp conroller = Get.put(
+    ForgotPasswordControllerImp(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class ForgetPassword extends GetView<LocaleController> {
                 hintText: "Enter_your_email_or_phone".tr,
                 prefixIcon: Icons.email_outlined,
               ),
-                  const SizedBox(height: 50),
+              const SizedBox(height: 50),
 
               SizedBox(
                 width: double.infinity,
@@ -59,10 +61,12 @@ class ForgetPassword extends GetView<LocaleController> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    conroller.goToverifycode();
+                  },
                   child: Text(
                     "check".tr,
-                    style: TextStyle(color: Colors.white,fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),

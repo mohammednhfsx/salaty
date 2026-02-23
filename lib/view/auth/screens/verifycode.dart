@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-
 import 'package:salaty/core/localization/local_change.dart';
-
 import 'package:salaty/theme/colors.dart';
 import 'package:salaty/view/auth/widgets/custom_text_body.dart';
-import 'package:salaty/view/auth/widgets/custom_text_lable.dart';
 import 'package:salaty/view/auth/widgets/custom_text_title.dart';
 
 // ignore: must_be_immutable
@@ -29,22 +27,37 @@ class Verifycode extends GetView<LocaleController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Forgot_Password
-              CustomTextTitle(text: "Forgot_Password?".tr),
+              CustomTextTitle(text: "verification_Code".tr),
+              
 
               const SizedBox(height: 5),
               // Enter_your_email_forgot
-              CustomTextBody(textbody: "Enter_your_email_forgot".tr),
+              CustomTextBody(textbody: "send_you_code_to_the_email".tr),
+                const SizedBox(height: 50),
+               Center(child: CustomTextTitle(text: "Enter_Code".tr)),
 
               const SizedBox(height: 50),
-              //  Email
-              CustomTextLable(textLable: "Email_or_phone".tr),
 
-              const SizedBox(height: 8),
-              // CustomTextfield(
-              //   controllertextfield: conroller.email,
-              //   hintText: "Enter_your_email_or_phone".tr,
-              //   prefixIcon: Icons.email_outlined,
-              // ),
+              // otp input
+              OtpTextField(
+                borderRadius: BorderRadius.circular(10),
+                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                alignment: Alignment.center,
+                contentPadding: EdgeInsetsGeometry.all(10),
+                numberOfFields: 5,
+                borderColor: Color.fromARGB(255, 252, 68, 190),
+                //set to true to show as box or false to show as dash
+                showFieldAsBox: true,
+                //runs when a code is typed in
+                onCodeChanged: (String code) {
+                  //handle validation or checks here
+                },
+                //runs when every textfield is filled
+                onSubmit: (String verificationCode) {
+                 
+                }, // end onSubmit
+              ),
+
               const SizedBox(height: 50),
 
               SizedBox(

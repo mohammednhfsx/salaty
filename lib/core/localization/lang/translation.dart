@@ -29,6 +29,9 @@ class Mytranslation extends Translations {
       "Enter_your_email_forgot":
           "أدخل عنوان بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك",
       "check": "تحقق",
+      "verification_Code": "رمز التحقق",
+      "Enter_Code": "أدخل الرمز",
+         "send_you_code_to_the_email":"يرجى إدخال الرمز المرسل إلى البريد الإلكتروني",
     },
 
     "en": {
@@ -57,6 +60,9 @@ class Mytranslation extends Translations {
       "Enter_your_email_forgot":
           "Enter your email address and we'll send you a link to reset your password",
       "check": "check",
+      "verification_Code": "verification Code",
+      "Enter_Code": "Enter Code",
+      "send_you_code_to_the_email":"please Enter The Code send to the email",
     },
   };
 }

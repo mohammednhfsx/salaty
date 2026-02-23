@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salaty/view/auth/screens/verifycode.dart';
 
 
 abstract class ForgotPasswordController extends GetxController {
  void checkEmail();
+   void goToverifycode();
  
 }
 
 class ForgotPasswordControllerImp extends ForgotPasswordController {
 
   late TextEditingController email;
+   @override
+  void goToverifycode(){
+    Get.to(Verifycode());
+   }
 
 
   @override
@@ -19,15 +25,13 @@ class ForgotPasswordControllerImp extends ForgotPasswordController {
 
   @override
   void onInit() {
-    email = TextEditingController();
-   
+  email = TextEditingController();
     super.onInit();
   }
 
   @override
   void dispose() {
     email.dispose();
-  
     super.dispose();
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/auth/resent_password_controller.dart';
 
-
 import 'package:salaty/core/localization/local_change.dart';
 
 import 'package:salaty/theme/colors.dart';
@@ -10,11 +9,12 @@ import 'package:salaty/view/auth/widgets/custom_text_body.dart';
 import 'package:salaty/view/auth/widgets/custom_text_lable.dart';
 import 'package:salaty/view/auth/widgets/custom_text_title.dart';
 
-
 // ignore: must_be_immutable
 class Resetpassword extends GetView<LocaleController> {
-   Resetpassword({super.key});
-   ResentPasswordControllerImp conroller = Get.put(ResentPasswordControllerImp());
+  Resetpassword({super.key});
+  ResentPasswordControllerImp conroller = Get.put(
+    ResentPasswordControllerImp(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class Resetpassword extends GetView<LocaleController> {
               //   hintText: "Enter_your_email_or_phone".tr,
               //   prefixIcon: Icons.email_outlined,
               // ),
-                  const SizedBox(height: 50),
+              const SizedBox(height: 50),
 
               SizedBox(
                 width: double.infinity,
@@ -63,7 +63,7 @@ class Resetpassword extends GetView<LocaleController> {
                   onPressed: () {},
                   child: Text(
                     "check".tr,
-                    style: TextStyle(color: Colors.white,fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),

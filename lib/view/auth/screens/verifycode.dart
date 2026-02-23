@@ -8,8 +8,8 @@ import 'package:salaty/view/auth/widgets/custom_text_title.dart';
 
 // ignore: must_be_immutable
 class Verifycode extends GetView<LocaleController> {
-   Verifycode({super.key});
-   VerifyCodeControllerImp conroller = Get.put(VerifyCodeControllerImp());
+  Verifycode({super.key});
+  VerifyCodeControllerImp conroller = Get.put(VerifyCodeControllerImp());
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +28,12 @@ class Verifycode extends GetView<LocaleController> {
             children: [
               //Forgot_Password
               CustomTextTitle(text: "verification_Code".tr),
-              
 
               const SizedBox(height: 5),
               // Enter_your_email_forgot
               CustomTextBody(textbody: "send_you_code_to_the_email".tr),
-                const SizedBox(height: 50),
-               Center(child: CustomTextTitle(text: "Enter_Code".tr)),
+              const SizedBox(height: 50),
+              Center(child: CustomTextTitle(text: "Enter_Code".tr)),
 
               const SizedBox(height: 50),
 
@@ -53,12 +52,8 @@ class Verifycode extends GetView<LocaleController> {
                   //handle validation or checks here
                 },
                 //runs when every textfield is filled
-                onSubmit: (String verificationCode) {
-                 
-                }, // end onSubmit
+                onSubmit: (String verificationCode) {}, // end onSubmit
               ),
-
-        
             ],
           ),
         ),

@@ -1,37 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:salaty/view/auth/screens/verifycode.dart';
 
+import 'package:get/get.dart';
+import 'package:salaty/view/auth/fogotPassword/resetpassword.dart';
 
 abstract class VerifyCodeController extends GetxController {
- void checkEmail();
-   void goToverifycode();
- 
+  void checkCode();
+  void goT0ResetPassword();
 }
 
 class VerifyCodeControllerImp extends VerifyCodeController {
-
-  late TextEditingController email;
-   @override
-  void goToverifycode(){
-    Get.to(Verifycode());
-   }
-
+  late String verifycode;
 
   @override
-  void checkEmail() {}
+  void goT0ResetPassword() {
+    Get.to(Resetpassword());
+  }
+
   @override
- 
+  void checkCode() {}
 
   @override
   void onInit() {
-  email = TextEditingController();
+ 
     super.onInit();
   }
 
-  @override
-  void dispose() {
-    email.dispose();
-    super.dispose();
-  }
+
 }

@@ -1,6 +1,6 @@
  import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/view/auth/screens/forget_password.dart';
+import 'package:salaty/view/auth/fogotPassword/forget_password.dart';
 import 'package:salaty/view/auth/screens/sign_up.dart';
 
  abstract  class LoginController extends GetxController {

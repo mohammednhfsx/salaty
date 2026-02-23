@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/view/auth/screens/verifycode.dart';
-
+import 'package:salaty/view/auth/fogotPassword/Success_ResetPassword.dart';
 
 abstract class ResentPasswordController extends GetxController {
- void checkEmail();
-   void goToverifycode();
- 
+  void Resetpassword();
+  void goToSuccessResetPassword();
 }
 
 class ResentPasswordControllerImp extends ResentPasswordController {
-
-  late TextEditingController email;
-   @override
-  void goToverifycode(){
-    Get.to(Verifycode());
-   }
-
+  late TextEditingController password;
+  late TextEditingController repassword;
+  @override
+  void goToSuccessResetPassword() {
+    Get.to(SuccessResetpassword());
+  }
 
   @override
-  void checkEmail() {}
+  void Resetpassword() {}
   @override
- 
-
   @override
   void onInit() {
-  email = TextEditingController();
+    password = TextEditingController();
+    repassword = TextEditingController();
     super.onInit();
   }
 
   @override
   void dispose() {
-    email.dispose();
+    password.dispose();
     super.dispose();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/view/auth/screens/verifycode.dart';
+import 'package:salaty/view/auth/fogotPassword/verifycode.dart';
 
 
 abstract class ForgotPasswordController extends GetxController {

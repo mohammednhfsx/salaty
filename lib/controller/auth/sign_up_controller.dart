@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salaty/view/auth/screens/check_email.dart';
 import 'package:salaty/view/auth/screens/login_screen.dart';
 
 abstract class SignUpController extends GetxController {
@@ -14,7 +15,9 @@ class SignUpControllerImp extends SignUpController {
   late TextEditingController password;
 
   @override
-  void signUp() {}
+  void signUp() {
+    Get.to(CheckEmail());
+  }
   @override
   goToSignIn() {
     Get.to(LoginScreen());

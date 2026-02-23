@@ -13,7 +13,7 @@ class Verifycode extends GetView<LocaleController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(appBar: AppBar(     backgroundColor: Colors.white,),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
@@ -52,7 +52,9 @@ class Verifycode extends GetView<LocaleController> {
                   //handle validation or checks here
                 },
                 //runs when every textfield is filled
-                onSubmit: (String verificationCode) {}, // end onSubmit
+                onSubmit: (String verificationCode) {
+                  conroller.goT0ResetPassword();
+                }, // end onSubmit
               ),
             ],
           ),

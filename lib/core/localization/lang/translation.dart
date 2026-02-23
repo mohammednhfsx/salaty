@@ -31,7 +31,13 @@ class Mytranslation extends Translations {
       "check": "تحقق",
       "verification_Code": "رمز التحقق",
       "Enter_Code": "أدخل الرمز",
-      "send_you_code_to_the_email":"يرجى إدخال الرمز المرسل إلى البريد الإلكتروني",
+      "send_you_code_to_the_email":
+      "يرجى إدخال الرمز المرسل إلى البريد الإلكتروني",
+      "Reset_Password": "إعادة تعيين كلمة المرور",
+      "new_password": "كلمة المرور الجديدة",
+      "Enter_new_password":"أدخل كلمة المرور الجديدة",
+       "check_email":"تحقق من البريد الإلكتروني" ,
+     
     },
 
     "en": {
@@ -62,7 +68,12 @@ class Mytranslation extends Translations {
       "check": "check",
       "verification_Code": "verification Code",
       "Enter_Code": "Enter Code",
-      "send_you_code_to_the_email":"please Enter The Code send to the email",
+      "send_you_code_to_the_email": "please Enter The Code send to the email",
+      "Reset_Password": "Reset Password",
+      "new_password": "New password",
+       "Enter_new_password":"Enter new password",
+       "check_email":"Check Email",
+      
     },
   };
 }

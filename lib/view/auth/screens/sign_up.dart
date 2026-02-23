@@ -142,7 +142,8 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Get.to(HomePage());
+                    controllerImp.signUp();
+                   
                   },
                   child: Text(
                     "Create_Account".tr,

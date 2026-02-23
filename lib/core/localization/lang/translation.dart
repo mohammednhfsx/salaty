@@ -31,7 +31,7 @@ class Mytranslation extends Translations {
       "check": "تحقق",
       "verification_Code": "رمز التحقق",
       "Enter_Code": "أدخل الرمز",
-         "send_you_code_to_the_email":"يرجى إدخال الرمز المرسل إلى البريد الإلكتروني",
+      "send_you_code_to_the_email":"يرجى إدخال الرمز المرسل إلى البريد الإلكتروني",
     },
 
     "en": {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
+import 'package:salaty/controller/auth/verify_code_controller.dart';
 import 'package:salaty/core/localization/local_change.dart';
-import 'package:salaty/theme/colors.dart';
 import 'package:salaty/view/auth/widgets/custom_text_body.dart';
 import 'package:salaty/view/auth/widgets/custom_text_title.dart';
 
 // ignore: must_be_immutable
 class Verifycode extends GetView<LocaleController> {
-  const Verifycode({super.key});
-  // ForgotPasswordControllerImp conroller = Get.put(ForgotPasswordControllerImp());
+   Verifycode({super.key});
+   VerifyCodeControllerImp conroller = Get.put(VerifyCodeControllerImp());
 
   @override
   Widget build(BuildContext context) {
@@ -58,26 +58,7 @@ class Verifycode extends GetView<LocaleController> {
                 }, // end onSubmit
               ),
 
-              const SizedBox(height: 50),
-
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: splash_screenColors,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "check".tr,
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 100),
+        
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salaty/controller/auth/resent_password_controller.dart';
 
 
 import 'package:salaty/core/localization/local_change.dart';
@@ -12,8 +13,8 @@ import 'package:salaty/view/auth/widgets/custom_text_title.dart';
 
 // ignore: must_be_immutable
 class Resetpassword extends GetView<LocaleController> {
-  const Resetpassword({super.key});
-  // ForgotPasswordControllerImp conroller = Get.put(ForgotPasswordControllerImp());
+   Resetpassword({super.key});
+   ResentPasswordControllerImp conroller = Get.put(ResentPasswordControllerImp());
 
   @override
   Widget build(BuildContext context) {

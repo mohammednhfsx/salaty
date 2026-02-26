@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:salaty/core/localization/lang/language.dart';
 
-import 'package:salaty/theme/colors.dart';
 class SplashScreen extends StatefulWidget {
 const SplashScreen({super.key});
 
@@ -16,14 +17,16 @@ class _SplashScreenState extends State<SplashScreen> {
   
     super.initState();
     Timer(Duration(seconds: 3), (){
-      Navigator.push(context,MaterialPageRoute(builder: (context)=>Language())) ;
+      Get.to(() => Language());
+
     });
   }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: splash_screenColors,
-      body: Center(child: Text("Salaty",style: TextStyle(fontSize: 30,color: Colors.white),)),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: Center(child: Image.asset("assets/images/Untitled.png"))
+      
     );
   }
 }

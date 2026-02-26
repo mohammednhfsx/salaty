@@ -13,7 +13,7 @@ class CustomLangChoose extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor:
-            isSelected ? const Color.fromARGB(255, 133, 252, 222) : Colors.grey[200],),
+            isSelected ? const Color.fromARGB(255, 28, 238, 81) : Colors.grey[200],),
       onPressed: onPressed,
       child: Text(text),
     );

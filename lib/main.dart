@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/core/localization/local_change.dart';
+import 'package:salaty/route.dart';
 import 'package:salaty/view/auth/screens/splash_screen.dart';
 import 'package:salaty/core/localization/lang/translation.dart';
 import 'package:salaty/core/services/services.dart';
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
    LocaleController controller = Get.put(LocaleController());
     return GetMaterialApp(translations: Mytranslation(),
     locale: controller.language,
-    home: SplashScreen(),
+  home: SplashScreen(),
+  routes: routes,
+    
  
     );
   }

@@ -44,7 +44,7 @@ class Verifycode extends GetView<LocaleController> {
                 alignment: Alignment.center,
                 contentPadding: EdgeInsetsGeometry.all(10),
                 numberOfFields: 5,
-                borderColor: Color.fromARGB(255, 252, 68, 190),
+                borderColor: Color.fromARGB(255, 250, 73, 191),
                 //set to true to show as box or false to show as dash
                 showFieldAsBox: true,
                 //runs when a code is typed in
@@ -53,7 +53,7 @@ class Verifycode extends GetView<LocaleController> {
                 },
                 //runs when every textfield is filled
                 onSubmit: (String verificationCode) {
-                  conroller.goT0ResetPassword();
+                   conroller.goT0ResetPassword();
                 }, // end onSubmit
               ),
             ],

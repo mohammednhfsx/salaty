@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:lottie/lottie.dart';
-import 'package:salaty/theme/colors.dart';
+import 'package:salaty/core/theme/colors.dart';
 
 class SuccessResetpassword extends StatelessWidget {
   const SuccessResetpassword({super.key});

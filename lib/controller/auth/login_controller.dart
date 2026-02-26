@@ -1,7 +1,9 @@
  import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:salaty/core/constant/route.dart';
 import 'package:salaty/view/auth/fogotPassword/forget_password.dart';
-import 'package:salaty/view/auth/screens/sign_up.dart';
+
 
  abstract  class LoginController extends GetxController {
   
@@ -11,6 +13,7 @@ import 'package:salaty/view/auth/screens/sign_up.dart';
    void goToforgotpassword();
 }
 class LoginControllerImp extends LoginController{
+  GlobalKey<FormState> keystate =GlobalKey<FormState>();
  late TextEditingController email;
 late TextEditingController password;
  @override
@@ -21,12 +24,16 @@ late TextEditingController password;
 
   @override
   login() {
+   var formdata = keystate.currentState;
+   if(formdata!.validate()) {}
+
+  
     
    
   }
   @override
   goToSignUp() {
-    Get.to(SignUp());
+Get.toNamed(AppRoutes.signUp );
  
   }   
   @override

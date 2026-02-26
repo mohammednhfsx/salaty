@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/get_instance.dart';
 
 import 'package:get/utils.dart';
 import 'package:lottie/lottie.dart';
+import 'package:salaty/controller/auth/success_signup.dart';
 
-import 'package:salaty/theme/colors.dart';
+import 'package:salaty/core/theme/colors.dart';
 
 class SuccessSignup extends StatelessWidget {
-  SuccessSignup({super.key});
+   SuccessSignup({super.key});
+ final SuccessControllerSignupImp controller = Get.put(SuccessControllerSignupImp());
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class SuccessSignup extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    //  controller.signUp();
+                     controller.goToLogin();
                   },
                   child: Text(
                     "Go to Login".tr,

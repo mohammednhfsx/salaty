@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/view/auth/screens/success_signup.dart';
+
+import 'package:salaty/view/auth/screens/verify_code_signup.dart';
 
 
 abstract class CheckEmailController extends GetxController {
  void checkEmail();
-   void goToSuccessSignUp();
+   void goToVerifySignup();
  
 }
 
 class CheckEmailControllerImp extends CheckEmailController {
 
   late TextEditingController email;
+  GlobalKey<FormState> keystate =GlobalKey<FormState>();
    @override
-  void goToSuccessSignUp(){
-    Get.to(SuccessSignup());
+  void goToVerifySignup(){
+    Get.to(VerifySignup());
    }
 
 
   @override
-  void checkEmail() {}
+  void checkEmail() {
+    var dataform = keystate.currentState;
+    if(dataform!.validate()) {}
+  }
   @override
  
 

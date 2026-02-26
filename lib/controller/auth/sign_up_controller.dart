@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/view/auth/screens/check_email.dart';
-import 'package:salaty/view/auth/screens/login_screen.dart';
+import 'package:salaty/core/constant/route.dart';
+
+
+
 
 abstract class SignUpController extends GetxController {
  void signUp();
@@ -9,6 +11,7 @@ abstract class SignUpController extends GetxController {
 }
 
 class SignUpControllerImp extends SignUpController {
+    GlobalKey<FormState> formstate =GlobalKey<FormState>();
   late TextEditingController fullName;
   late TextEditingController phone;
   late TextEditingController email;
@@ -16,11 +19,15 @@ class SignUpControllerImp extends SignUpController {
 
   @override
   void signUp() {
-    Get.to(CheckEmail());
+   var formdata = formstate.currentState;
+   if(formdata!.validate()){
+         Get.toNamed(AppRoutes.VerifySignup);
+   }
   }
   @override
-  goToSignIn() {
-    Get.to(LoginScreen());
+  void goToSignIn() {
+     Get.back();
+  
   }
 
   @override

@@ -8,11 +8,9 @@ import 'package:salaty/core/localization/lang/widgets/custom_lang_choose.dart';
 import 'package:salaty/view/auth/screens/login_screen.dart';
 
 class Language extends GetView<LocaleController>{
-  
-   const Language({super.key});
- 
 
- 
+   const Language({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,7 @@ class Language extends GetView<LocaleController>{
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,),
               onPressed: () {
-                Get.to(LoginScreen());
+                Get.off(()=>LoginScreen());
               },
               child: Text(
                 "Next".tr,

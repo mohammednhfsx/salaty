@@ -10,6 +10,7 @@ abstract class ForgotPasswordController extends GetxController {
 }
 
 class ForgotPasswordControllerImp extends ForgotPasswordController {
+      GlobalKey<FormState> keystates =GlobalKey<FormState>();
 
   late TextEditingController email;
    @override
@@ -19,7 +20,10 @@ class ForgotPasswordControllerImp extends ForgotPasswordController {
 
 
   @override
-  void checkEmail() {}
+  void checkEmail() {
+        var dataform = keystates.currentState;
+    if(dataform!.validate()) {}
+  }
   @override
  
 

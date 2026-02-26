@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class CustomTextfield extends StatelessWidget {
-  const CustomTextfield({
+class CustomTextFormfield extends StatelessWidget {
+   const CustomTextFormfield({
     super.key,
     required this.hintText,
     required this.prefixIcon,
     this.suffixIcon,
-    required this.controllertextfield,
+    required this.controllertextfield, required this.valid,
   });
   final String hintText;
   final TextEditingController controllertextfield;
   final IconData prefixIcon;
   final IconData? suffixIcon;
+ final String? Function(String?)valid;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(validator:valid ,
+      
       controller: controllertextfield,
       decoration: InputDecoration(
         hintText: hintText,

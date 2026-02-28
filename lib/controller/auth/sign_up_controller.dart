@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/core/constant/route.dart';
+
 
 
 
@@ -21,7 +21,8 @@ class SignUpControllerImp extends SignUpController {
   void signUp() {
    var formdata = formstate.currentState;
    if(formdata!.validate()){
-         Get.toNamed(AppRoutes.VerifySignup);
+      
+
    }
   }
   @override

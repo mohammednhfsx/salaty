@@ -16,7 +16,7 @@ class Mytranslation extends Translations {
       "Enter_your_password": "أدخل كلمة المرور الخاصة بك",
       "Forget_password": "نسيت كلمة المرور؟",
       "Sign_in": "تسجيل الدخول",
-      "Don't_have_an_account?": "ليس لديك حساب؟",
+      "Don't_have_an_account": "ليس لديك حساب؟",
       "Sign_Up": "إنشاء حساب",
       "Create_Account": "إنشاء حساب",
       "Sign_up_to_start_shopping": "التسجيل لبدء التسوق",
@@ -32,12 +32,12 @@ class Mytranslation extends Translations {
       "verification_Code": "رمز التحقق",
       "Enter_Code": "أدخل الرمز",
       "send_you_code_to_the_email":
-      "يرجى إدخال الرمز المرسل إلى البريد الإلكتروني",
+          "يرجى إدخال الرمز المرسل إلى البريد الإلكتروني",
       "Reset_Password": "إعادة تعيين كلمة المرور",
       "new_password": "كلمة المرور الجديدة",
-      "Enter_new_password":"أدخل كلمة المرور الجديدة",
-       "check_email":"تحقق من البريد الإلكتروني" ,
-     
+      "Enter_new_password": "أدخل كلمة المرور الجديدة",
+      "check_email": "تحقق من البريد الإلكتروني",
+      "please_select": "الرجاء اختيار لغتك المفضلة",
     },
 
     "en": {
@@ -53,7 +53,7 @@ class Mytranslation extends Translations {
       "Enter_your_password": "Enter your password",
       "Forget_password": "Forget password ?",
       "Sign_in": "Sign in",
-      "Don't_have_an_account? ": "Don't have an account? ",
+      "Don't_have_an_account": "Don't have an account? ",
       "Sign_Up": "Sign Up",
       "Create_Account": "Create Account",
       "Sign_up_to_start_shopping": "Sign up to start shopping ",
@@ -71,9 +71,9 @@ class Mytranslation extends Translations {
       "send_you_code_to_the_email": "please Enter The Code send to the email",
       "Reset_Password": "Reset Password",
       "new_password": "New password",
-       "Enter_new_password":"Enter new password",
-       "check_email":"Check Email",
-      
+      "Enter_new_password": "Enter new password",
+      "check_email": "Check Email",
+      "please_select": "please select your Preferred language",
     },
   };
 }

@@ -16,13 +16,20 @@ class LoginControllerImp extends LoginController{
   GlobalKey<FormState> keystate =GlobalKey<FormState>();
  late TextEditingController email;
 late TextEditingController password;
+ bool isShowPassword=true;
+
+
+void showPassword(){
+  isShowPassword =isShowPassword == true ?false:true;
+  update();
+}
  @override
   void goToforgotpassword(){
       Get.to(ForgetPassword());
 
  }
 
-  @override
+  @override 
   login() {
    var formdata = keystate.currentState;
    if(formdata!.validate()) {}

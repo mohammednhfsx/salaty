@@ -7,15 +7,17 @@ import 'package:salaty/core/theme/colors.dart';
 import 'package:salaty/view/auth/widgets/custom_textfield.dart';
 
 class SignUp extends StatelessWidget {
-  SignUp({super.key});
-  final SignUpControllerImp controllerImp = Get.put(SignUpControllerImp());
+  SignUp({super.key}) {
+    Get.lazyPut(() => SignUpControllerImp());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffFFFFFF),
       body: SafeArea(
-        child: Container(
+        child:GetBuilder<SignUpControllerImp>(builder: (controllerImp){
+           return Container(
           padding: EdgeInsets.all(30),
           child: Form(
             key: controllerImp.formstate,
@@ -151,7 +153,8 @@ class SignUp extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        );
+        })
       ),
     );
   }

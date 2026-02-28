@@ -5,7 +5,7 @@ import 'package:salaty/core/services/services.dart';
 
 class LocaleController extends GetxController {
   Locale? language;
-  var selectedLang = "ar".obs;
+  var selectedLang = "".obs;
   
   Myservices myservices = Get.find();
 

@@ -1,26 +1,30 @@
 
-import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:salaty/core/constant/route.dart';
+import 'package:salaty/core/middleware/mymiddleware.dart';
 import 'package:salaty/view/auth/fogotPassword/forget_password.dart';
 import 'package:salaty/view/auth/fogotPassword/resetpassword.dart';
 import 'package:salaty/view/auth/fogotPassword/success_resetpassword.dart';
 import 'package:salaty/view/auth/fogotPassword/verifycode.dart';
-
 import 'package:salaty/view/auth/screens/login_screen.dart';
 import 'package:salaty/view/auth/screens/sign_up.dart';
+import 'package:salaty/view/auth/screens/splash_screen.dart';
 import 'package:salaty/view/auth/screens/success_signup.dart';
 import 'package:salaty/view/auth/screens/verify_code_signup.dart';
 
-Map<String, Widget Function(BuildContext)> routes = {
-  // Auth
-  AppRoutes.login: (context) =>  LoginScreen(),
-  AppRoutes.signUp: (context) =>  SignUp(),
-  AppRoutes.forgetPassword: (context) =>  ForgetPassword(),
-  AppRoutes.verfiyCode: (context) =>  Verifycode(),
-  AppRoutes.resetPassword: (context) =>  Resetpassword(),
-  AppRoutes.VerifySignup: (context) =>  VerifySignup(),
-  AppRoutes.successResetpassword: (context) =>  SuccessResetpassword(),
-  AppRoutes.successSignUp: (context) =>  SuccessSignup(),
+List<GetPage<dynamic>>? routes = [
+   GetPage(name: "/", page: () => SplashScreen(),middlewares: [Mymiddleware()]),
+  GetPage(name: AppRoutes.login, page: () => LoginScreen()),
+  GetPage(name: AppRoutes.signUp, page: () => SignUp()),
+  GetPage(name: AppRoutes.forgetPassword, page: () => ForgetPassword()),
+  GetPage(name: AppRoutes.verfiyCode, page: () => Verifycode()),
+  GetPage(name: AppRoutes.resetPassword, page: () => Resetpassword()),
+  GetPage(name: AppRoutes.verifySignup, page: () => VerifySignup()),
+  GetPage(name: AppRoutes.successResetpassword, page: () => SuccessResetpassword()),
+  GetPage(name: AppRoutes.successSignUp, page: () => SuccessSignup()),
+];
 
 
-};
+
+  
+

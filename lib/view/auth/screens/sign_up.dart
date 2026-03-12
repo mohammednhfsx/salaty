@@ -5,6 +5,7 @@ import 'package:salaty/core/functions/validinput.dart';
 
 import 'package:salaty/core/theme/colors.dart';
 import 'package:salaty/view/auth/widgets/custom_textfield.dart';
+import 'package:salaty/view/screen/home_page.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({super.key}) {
@@ -121,7 +122,9 @@ class SignUp extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      controllerImp.signUp();
+                      Get.offAll(HomePage());
+                      
+                      // controllerImp.signUp();
                     },
                     child: Text(
                       "Create_Account".tr,

@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.5.4
   lottie: ^3.3.2
   flutter_otp_text_field: ^1.5.1+1
+  flutter_typeahead: ^5.2.0
 
 dev_dependencies:
   flutter_test:
@@ -73,7 +74,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/lottile/
+    - assets/icons/
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see

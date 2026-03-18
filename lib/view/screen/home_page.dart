@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/core/widgets/ListApp/list_categories.dart';
-import 'package:salaty/core/widgets/container_off%25.dart';
+import 'package:salaty/core/widgets/custom_container_off.dart';
 import 'package:salaty/core/widgets/custom_text.dart';
 import 'package:salaty/core/widgets/list_view_gategories.dart';
 import 'package:salaty/core/widgets/search_home.dart';
@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentIndex=0;
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,8 +92,11 @@ class _HomePageState extends State<HomePage> {
                 //=========================================================================
                 // container  off%
                 //===============================================================================
-                ContainerOff(),
+                CustomContainerOff(),
 
+                //=========================================================================
+                // GridView products
+                //===============================================================================
                 Padding(
                   padding: const EdgeInsets.only(left: 25, top: 20),
                   child: Row(
@@ -118,9 +121,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 10),
 
-                //=========================================================================
-                // GridView products
-                //===============================================================================
                 GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -132,12 +132,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   itemCount: products.length,
                   itemBuilder: (context, index) {
-                    return InkWell(onTap: () {
-                      Get.to(ProductDetails());
-                    },
+                    return InkWell(
+                      onTap: () {
+                        Get.to(ProductDetails());
+                      },
                       child: Container(
                         decoration: BoxDecoration(
-                       color: Color(0xffEEF2F7),
+                          color: Color(0xffEEF2F7),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Column(
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                      
+
                                 /// off%
                                 Positioned(
                                   top: 8,
@@ -182,10 +183,10 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                      
+
                             SizedBox(height: 8),
-                      
-                            /// name products 
+
+                            /// name products
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
@@ -193,9 +194,9 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                      
+
                             SizedBox(height: 6),
-                      
+
                             /// price
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8),
@@ -220,9 +221,9 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                      
+
                             SizedBox(height: 6),
-                      
+
                             /// التقييم
                             // Padding(
                             //   padding: EdgeInsets.symmetric(horizontal: 8),
@@ -245,7 +246,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(currentIndex:currentIndex ,onTap:(index){currentIndex =index;} ,),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          currentIndex = index;
+        },
+      ),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:salaty/core/widgets/custom_text.dart';
 
-class ContainerOff extends StatelessWidget {
-  const ContainerOff({super.key});
+class CustomContainerOff extends StatelessWidget {
+  const CustomContainerOff({super.key});
 
   @override
   Widget build(BuildContext context) {

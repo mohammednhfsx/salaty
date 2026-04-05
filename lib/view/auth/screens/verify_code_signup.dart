@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/auth/verify_code_signup.dart';
 import 'package:salaty/core/localization/local_change.dart';
+import 'package:salaty/core/theme/colors.dart';
 import 'package:salaty/view/auth/widgets/custom_text_body.dart';
 import 'package:salaty/view/auth/widgets/custom_text_title.dart';
 
@@ -10,6 +10,7 @@ import 'package:salaty/view/auth/widgets/custom_text_title.dart';
 class VerifySignup extends GetView<LocaleController> {
   VerifySignup({super.key});
   VerifyCodeSignupImp conroller = Get.put(VerifyCodeSignupImp());
+  
 
   @override
   Widget build(BuildContext context) {
@@ -33,29 +34,47 @@ class VerifySignup extends GetView<LocaleController> {
               // Enter_your_email_forgot
               CustomTextBody(textbody: "send_you_code_to_the_email".tr),
               const SizedBox(height: 50),
-              Center(child: CustomTextTitle(text: "Enter_Code".tr)),
+              Center(child: CustomTextTitle(text: "verify link of Email".tr)),
 
               const SizedBox(height: 50),
+               SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: splash_screenColors,          
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        onPressed: () {
+                          conroller.verify(); },
+                        child: Text(
+                          "Verify".tr,
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ),
+                    ),
 
               // otp input
-              OtpTextField(
-                borderRadius: BorderRadius.circular(10),
-                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                alignment: Alignment.center,
-                contentPadding: EdgeInsetsGeometry.all(10),
-                numberOfFields: 5,
-                borderColor: Color.fromARGB(255, 250, 73, 191),
-                //set to true to show as box or false to show as dash
-                showFieldAsBox: true,
-                //runs when a code is typed in
-                onCodeChanged: (String code) {
-                  //handle validation or checks here
-                },
-                //runs when every textfield is filled
-                onSubmit: (String verificationCode) {
-                   conroller.goToSuccessSignup();
-                }, // end onSubmit
-              ),
+              // OtpTextField(
+              //   borderRadius: BorderRadius.circular(10),
+              //   textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              //   alignment: Alignment.center,
+              //   contentPadding: EdgeInsetsGeometry.all(10),
+              //   numberOfFields: 5,
+              //   borderColor: Color.fromARGB(255, 250, 73, 191),
+              //   //set to true to show as box or false to show as dash
+              //   showFieldAsBox: true,
+              //   //runs when a code is typed in
+              //   onCodeChanged: (String code) {
+              //     //handle validation or checks here
+              //   },
+              //   //runs when every textfield is filled
+              //   onSubmit: (String verificationCode) {
+              //      conroller.goToSuccessSignup();
+              //   }, // end onSubmit
+              // ),
             ],
           ),
         ),

@@ -1,24 +1,27 @@
-
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:salaty/core/constant/route.dart';
-import 'package:salaty/core/services/services.dart';
 
-class Mymiddleware extends GetMiddleware{
-  // ignore: non_constant_identifier_names
-  int? get Priority => 1;
-
-
-Myservices myservices = Get.find();
+class Mymiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if(myservices.sharedPreferences.getBool("language")== true) {
-      return  RouteSettings(name: AppRoutes.login);
+
+    final user = FirebaseAuth.instance.currentUser;
+
+    // إذا ما مسجل دخول
+    if (user == null) {
+      return const RouteSettings(name: AppRoutes.login);
     }
+
+    // إذا مسجل بس مو مفعل الإيميل
+    if (!user.emailVerified) {
+      return const RouteSettings(name: AppRoutes.verifyCodeLogin);
+    }
+
+
     return null;
   }
-
-
 }

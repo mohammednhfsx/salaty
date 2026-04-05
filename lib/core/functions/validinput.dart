@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
  dynamic validInput(String val ,String type ,int min ,int  max ){
 
@@ -36,4 +38,21 @@ import 'package:get/get.dart';
 
 
 
+}
+
+
+Future<void> checkLogin() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  bool isLogged = prefs.getBool("isLogged") ?? false;
+
+  final user = FirebaseAuth.instance.currentUser;
+
+  await user?.reload();
+
+  if (user != null && user.emailVerified && isLogged) {
+    Get.offAllNamed("/Homepage");
+  } else {
+    Get.offAllNamed("/login");
+  }
 }

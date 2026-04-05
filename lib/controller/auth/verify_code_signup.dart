@@ -1,15 +1,18 @@
 
+
 import 'package:get/get.dart';
+import 'package:salaty/controller/auth/auth_controller.dart';
 import 'package:salaty/view/auth/screens/success_signup.dart';
 
 
 
 abstract class VerifyCodeSignup extends GetxController {
-  void checkCode();
+  void verify();
   void goToSuccessSignup();
 }
 
 class VerifyCodeSignupImp extends VerifyCodeSignup {
+  AuthController authcontroller =Get.find();
   late String verifycode;
 
   @override
@@ -18,7 +21,10 @@ class VerifyCodeSignupImp extends VerifyCodeSignup {
   }
 
   @override
-  void checkCode() {}
+  void verify() {
+  Get.find<AuthController>().checkEmailVerification();
+  Get.to(SuccessSignup());
+  }
 
 
 

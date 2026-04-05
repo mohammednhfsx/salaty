@@ -16,7 +16,7 @@ class SuccessControllerSignupImp extends SuccessControllerSignup {
 
   @override
   void goToLogin() {
-  Get.offAllNamed(AppRoutes.login);
+  Get.offAllNamed(AppRoutes.homepage);
   }
 
 

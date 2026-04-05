@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:salaty/core/constant/route.dart';
 import 'package:salaty/view/auth/fogotPassword/forget_password.dart';
+import 'package:salaty/controller/auth/auth_controller.dart';
 
 
  abstract  class LoginController extends GetxController {
@@ -17,6 +18,7 @@ class LoginControllerImp extends LoginController{
  late TextEditingController email;
 late TextEditingController password;
  bool isShowPassword=true;
+final AuthController controller = Get.find<AuthController>();
 
 
 void showPassword(){
@@ -32,7 +34,9 @@ void showPassword(){
   @override 
   login() {
    var formdata = keystate.currentState;
-   if(formdata!.validate()) {}
+   if(formdata!.validate()) {
+      controller.login(email.text, password.text );
+   }
 
   
     

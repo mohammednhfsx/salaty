@@ -13,9 +13,9 @@ import 'package:salaty/view/auth/screens/success_signup.dart';
 import 'package:salaty/view/auth/screens/verify_code_login.dart';
 import 'package:salaty/view/auth/screens/verify_code_signup.dart';
 import 'package:salaty/view/screen/cart.dart';
-import 'package:salaty/view/screen/home_page.dart';
+import 'package:salaty/view/screen/nav_page.dart';
 import 'package:salaty/view/screen/orders.dart';
-import 'package:salaty/view/screen/profile.dart';
+import 'package:salaty/view/screen/profile/profile.dart';
 
 List<GetPage<dynamic>>? routes = [
   GetPage(name: "/", page: () => SplashScreen(), middlewares: [Mymiddleware()]),

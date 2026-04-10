@@ -6,10 +6,10 @@ class AppRoutes {
   static const String resetPassword = "/resetpassword";
   static const String successSignUp = "/successsignup";
   static const String successResetpassword = "/successresetpassword";
-  static const String verifySignup = "/verifySignup";
-  static const String homepage = "/Homepage";
-  static const String verifyCodeLogin = "/VerifyCodeLogin";
-  static const String cart = "/Cart";
-  static const String orders = "/Orders";
-  static const String profile = "/Profile";
+  static const String verifySignup = "/verifysignup";
+  static const String homepage = "/homepage";
+  static const String verifyCodeLogin = "/verifylogin";
+  static const String cart = "/cart";
+  static const String orders = "/orders";
+  static const String profile = "/profile";
 }

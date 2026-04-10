@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
+import 'package:salaty/controller/cart/cart_controller.dart';
 
 
 import 'package:salaty/core/localization/local_change.dart';
@@ -15,6 +16,7 @@ void main()async {
   await Firebase.initializeApp();
 
   Get.put(AuthController(), permanent: true);
+  Get.put(CartController());
   
 
 
@@ -28,9 +30,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    
+
    LocaleController controller = Get.put(LocaleController());
     return GetMaterialApp(translations: Mytranslation(),
     locale: controller.language,
+     initialRoute: "/",   
 
   getPages: routes,
     

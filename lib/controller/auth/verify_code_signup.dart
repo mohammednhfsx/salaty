@@ -23,7 +23,7 @@ class VerifyCodeSignupImp extends VerifyCodeSignup {
   @override
   void verify() {
   Get.find<AuthController>().checkEmailVerification();
-  Get.to(SuccessSignup());
+  // Get.to(SuccessSignup());
   }
 
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:salaty/controller/cart/cart_controller.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartController = Get.find<CartController>();
     final product = Get.arguments;
     return Scaffold(
       appBar: AppBar(title: Text(product['name'])),
@@ -113,6 +115,54 @@ class ProductDetails extends StatelessWidget {
             child: Text(
               product['description'],
               style: TextStyle(color: Colors.grey, fontSize: 18),
+            ),
+          ),
+          SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                cartController.addToCart(product);
+
+               Get.snackbar(
+  "",
+  "",
+  backgroundColor: Colors.green,
+  titleText: const Text(
+    "Success",
+    style: TextStyle(
+      fontSize: 20, // 🔥 حجم العنوان
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  messageText: const Text(
+    "Added to cart",
+    style: TextStyle(
+      fontSize: 16, // 🔥 حجم النص
+      color: Colors.white,
+    ),
+  ),
+);
+              },
+              child: Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                alignment: AlignmentGeometry.center,
+                child: Text(
+                  "Add to Cart",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           ),
         ],

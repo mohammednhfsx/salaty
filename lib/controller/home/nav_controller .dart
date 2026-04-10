@@ -1,6 +1,8 @@
+// ignore: file_names
 import 'package:get/get.dart';
 
-class NavController extends GetxController {
+// ignore: camel_case_types
+class navController extends GetxController {
   var currentIndex = 0.obs;
 
   void changeIndex(int index) {

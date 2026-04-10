@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:salaty/core/constant/route.dart';
 
  dynamic validInput(String val ,String type ,int min ,int  max ){
 
@@ -51,8 +52,8 @@ Future<void> checkLogin() async {
   await user?.reload();
 
   if (user != null && user.emailVerified && isLogged) {
-    Get.offAllNamed("/Homepage");
+    Get.offAllNamed(AppRoutes.homepage);
   } else {
-    Get.offAllNamed("/login");
+    Get.offAllNamed(AppRoutes.login);
   }
 }

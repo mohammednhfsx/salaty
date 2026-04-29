@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:salaty/core/theme/colors.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -17,7 +16,7 @@ class BottomNavBar extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: onTap,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: splash_screenColors,
+      selectedItemColor:  Colors.teal,
       unselectedItemColor: Colors.grey,
       items: const [
 

@@ -1,39 +1,24 @@
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:salaty/core/constant/route.dart';
-
 
 class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   String? userName;
+  String? userEmail;
+  bool isAdmin =false;
 
-
-  @override
-  void onInit() {
-    super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      auth.authStateChanges().listen((User? user) {
-     
-        if (user == null) {
-          print("============================User is signed out");
-          Get.offAllNamed("/login");
-        } else {
-         if (user.emailVerified) {
-      Get.offAllNamed(AppRoutes.homepage);
-    } else {
-      Get.offAllNamed(AppRoutes.verifySignup);
-    }
-   
-        }
-      });
-    });
-  }
+List<QueryDocumentSnapshot> dataUser=[];
+@override
+void onInit() {
+  getUserData();
+  super.onInit();
+}
 
   // ================= SIGN UP =================
-  Future<void> signUp(String email, String password, String name) async {
+  Future<bool> signUp(String email, String password, String name) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -42,64 +27,96 @@ class AuthController extends GetxController {
 
       await userCredential.user!.sendEmailVerification();
       userName = name;
-    
-
+      return true;
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
+    return false;
   }
 
   // ================= LOGIN =================
-  Future<void> login(String email, String password) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      //  Get.offAllNamed("/Homepage");
-      // final user = FirebaseAuth.instance.currentUser;
-      // await user?.reload();
-
-      // if (user != null && user.emailVerified) {
-      //   Get.offAllNamed(AppRoutes.homepage);
-      // } else {
-      //   Get.toNamed(AppRoutes.verifyCodeLogin);
-      // }
-    } catch (e) {
-      Get.snackbar("Error", e.toString());
-    }
+ Future<bool> login(String email, String password) async {
+  try {
+    await auth.signInWithEmailAndPassword(email: email, password: password);
+    
+    bool verified = await checkEmailVerification();
+    if (!verified) return false; // ← لا يدخل إذا ما أكد
+    
+    await getUserData();
+    update();
+    return true;
+  } catch (e) {
+    Get.snackbar("Error", e.toString());
+    return false;
   }
+}
+
 
   // ================= VERIFY =================
-  Future<void> checkEmailVerification() async {
-    await auth.currentUser!.reload();
+ // ✅ المفروض يرجع bool ويمنع الدخول
+Future<bool> checkEmailVerification() async {
+  await auth.currentUser!.reload();
 
-    if (auth.currentUser!.emailVerified) {
-      // 🔥 تحقق إذا المستخدم موجود أصلاً
-      DocumentSnapshot doc = await firestore
-          .collection("users")
-          .doc(auth.currentUser!.uid)
-          .get();
-
-      if (!doc.exists) {
-        // 🔥 أضف المستخدم مرة وحدة فقط
-        await firestore.collection("users").doc(auth.currentUser!.uid).set({
-          "email": auth.currentUser!.email,
-          "name": userName ?? "No Name",
-          "uid": auth.currentUser!.uid,
-          "createdAt": FieldValue.serverTimestamp(),
-        });
-        
-      }
-
-    } else {
-      Get.snackbar("Error", "Email not verified ❌");
-    }
+  if (!auth.currentUser!.emailVerified) {
+    Get.snackbar("Error", "Email not verified ❌");
+    await auth.signOut(); // ← يسجل خروج
+    return false;
   }
+
+  DocumentSnapshot doc = await firestore
+      .collection("users")
+      .doc(auth.currentUser!.uid)
+      .get();
+
+  if (!doc.exists) {
+    await firestore.collection("users").doc(auth.currentUser!.uid).set({
+      "email": auth.currentUser!.email,
+      "name": userName ?? "No Name",
+      "uid": auth.currentUser!.uid,
+      "role": auth.currentUser!.email == "abc3dr@gmail.com" ? "admin" : "user",
+      "createdAt": FieldValue.serverTimestamp(),
+    });
+  }
+  return true;
+}
+
 
   // ================= LOGOUT =================
   Future<void> logout() async {
     await auth.signOut();
-    // Get.offAllNamed("/login");
+    Get.offAllNamed("/login");
   }
+
+
+
+
+    // ================= get data user =================
+
+   Future<void> getUserData() async {
+  try {
+    if (auth.currentUser == null) return;
+
+    String uid = auth.currentUser!.uid;
+
+    DocumentSnapshot doc =
+        await firestore.collection("users").doc(uid).get();
+
+    if (doc.exists) {
+      userName = doc['name'];
+      userEmail = doc['email'];
+
+      if(doc['role']=='admin'){
+        isAdmin=true;
+      }else{isAdmin=false;}
+      update();
+    }
+  } catch (e) {
+    Future.delayed(Duration(milliseconds: 300), () {
+      Get.snackbar("Error", e.toString());
+    });
+  }
+}
+
+ 
+
 }

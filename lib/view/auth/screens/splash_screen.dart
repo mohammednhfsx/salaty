@@ -1,9 +1,9 @@
+
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:salaty/controller/auth/splash_controller.dart';
-import 'package:salaty/core/localization/lang/language.dart';
+import 'package:salaty/view/auth/screens/login_screen.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,30 +13,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final controller = Get.put(SplashController());
-
   @override
   void initState() {
     super.initState();
-
-    Timer(const Duration(seconds: 3), () async {
-
-      final user = FirebaseAuth.instance.currentUser;
-
-      if (user != null) {
-        await user.reload();
-
-        if (user.emailVerified) {
-          Get.offAllNamed("/Homepage");
-        } else {
-          Get.offAllNamed("/VerifyCodeLogin");
-        }
-
-      } else {
-        Get.offAll(() =>  Language());
-      }
-
-    });
+     Timer(const Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) =>  LoginScreen()),);});
+   
   }
 
   @override

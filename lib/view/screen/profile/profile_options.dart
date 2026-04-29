@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:salaty/view/screen/profile/edit_profile.dart';
+
 
 class ProfileOptions extends StatelessWidget {
   const ProfileOptions({super.key});
@@ -14,6 +13,7 @@ class ProfileOptions extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.2),
             blurRadius: 10,
           ),
@@ -24,7 +24,7 @@ class ProfileOptions extends StatelessWidget {
           buildItem(
             icon: Icons.person_outline,
             title: "Edit Profile",
-            subtitle: "Update your personal information", onTap: () {Get.to(EditProfile());  },
+            subtitle: "Update your personal information", onTap: (){ },
           ),
           buildItem(
             icon: Icons.location_on_outlined,
@@ -76,8 +76,8 @@ class ProfileOptions extends StatelessWidget {
         ListTile(
           leading: CircleAvatar(
             radius: 22,
-            backgroundColor: Colors.blue.withOpacity(0.1),
-            child: Icon(icon, color: Colors.blue),
+            backgroundColor: Colors.green.withOpacity(0.1),
+            child: Icon(icon, color:   Colors.teal,),
           ),
           title: Text(title),
           subtitle: Text(

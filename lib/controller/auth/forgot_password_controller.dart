@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/view/auth/fogotPassword/verifycode.dart';
@@ -19,12 +20,21 @@ class ForgotPasswordControllerImp extends ForgotPasswordController {
    }
 
 
-  @override
-  void checkEmail() {
-        var dataform = keystates.currentState;
-    if(dataform!.validate()) {}
+ @override
+void checkEmail() async {
+  var dataform = keystates.currentState;
+  if (dataform!.validate()) {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email.text.trim());
+      Get.snackbar("تم ✅", "تم إرسال رابط إعادة التعيين لبريدك");
+      Get.back();
+    } catch (e) {
+      Get.snackbar("خطأ", e.toString());
+    }
   }
-  @override
+}
+  
  
 
   @override

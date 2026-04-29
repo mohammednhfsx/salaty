@@ -14,6 +14,7 @@ abstract class VerifyCodeSignup extends GetxController {
 class VerifyCodeSignupImp extends VerifyCodeSignup {
   AuthController authcontroller =Get.find();
   late String verifycode;
+   var isLoading = false.obs;
 
   @override
   void goToSuccessSignup() {
@@ -21,9 +22,25 @@ class VerifyCodeSignupImp extends VerifyCodeSignup {
   }
 
   @override
-  void verify() {
-  Get.find<AuthController>().checkEmailVerification();
-  // Get.to(SuccessSignup());
+  Future<void> verify()async {
+    try{
+      isLoading.value=true;
+
+      bool verified = await authcontroller.checkEmailVerification();
+       if(verified){
+        goToSuccessSignup();
+       }
+       
+
+
+
+    }catch(e){
+        Get.snackbar("خطأ", e.toString());
+    }
+     finally {
+      isLoading.value = false;
+    }
+ 
   }
 
 

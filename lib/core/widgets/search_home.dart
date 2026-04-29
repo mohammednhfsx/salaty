@@ -14,19 +14,19 @@ class SearchHome extends StatelessWidget {
     );
   },
   child: Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20),
+    padding: EdgeInsets.only(right: 20, left: 20),
     child: Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
-      height: 50,
-      decoration: BoxDecoration(
-        color: Color(0xffEEF2F7),
-        borderRadius: BorderRadius.circular(15),
+      height: 45,
+      decoration: BoxDecoration(border: Border.all(color: Colors.grey),
+        color: Colors.white30,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          Icon(Icons.search),
+          Icon(Icons.search,color:  Colors.grey,),
           SizedBox(width: 10),
-          Text("Search products..."),
+          Text("Search products...",style: TextStyle(color: Colors.grey),),
         ],
       ),
     ),
@@ -35,3 +35,4 @@ class SearchHome extends StatelessWidget {
 
   }
 }
+

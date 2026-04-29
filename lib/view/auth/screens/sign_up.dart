@@ -7,12 +7,10 @@ import 'package:salaty/core/functions/validinput.dart';
 import 'package:salaty/core/theme/colors.dart';
 import 'package:salaty/view/auth/widgets/custom_textfield.dart';
 
-
 class SignUp extends StatelessWidget {
   SignUp({super.key}) {
     Get.lazyPut(() => SignUpControllerImp());
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -123,29 +121,44 @@ class SignUp extends StatelessWidget {
                     //   ),
                     // ),
 
-
                     //==============================================================
                     //button sign up
                     //==============================================================
-                    SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: splash_screenColors,          
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        onPressed: () {
-                          controllerImp.signUp(); },
-                        child: Text(
-                          "Create_Account".tr,
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ),
+                  SizedBox(
+  width: double.infinity,
+  height: 50,
+  child: GetBuilder<SignUpControllerImp>(
+    builder: (controller) => ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: splash_screenColors,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
+      onPressed: controller.isLoading
+          ? null
+          : () {
+              controller.signUp();
+            },
+      child: controller.isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
+            )
+          : Text(
+              "Create_Account".tr,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+    ),
+  ),
+),
                     //=====================================
                     //Alreadyaccount
                     //=================================

@@ -18,6 +18,7 @@ class LoginControllerImp extends LoginController{
  late TextEditingController email;
 late TextEditingController password;
  bool isShowPassword=true;
+ bool isLoading = false;
 final AuthController controller = Get.find<AuthController>();
 
 
@@ -32,16 +33,29 @@ void showPassword(){
  }
 
   @override 
-  login() {
-   var formdata = keystate.currentState;
-   if(formdata!.validate()) {
-      controller.login(email.text, password.text );
-   }
+login() async {
+  var formdata = keystate.currentState;
 
-  
-    
-   
+  if (formdata!.validate()) {
+    isLoading = true;
+    update();
+
+    bool success = await controller.login(
+      email.text,
+      password.text,
+    );
+
+    // نخلي فريم واحد حتى يظهر اللودنك
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    isLoading = false;
+    update();
+
+    if (success) {
+      Get.offAllNamed(AppRoutes.homepage);
+    }
   }
+}
   @override
   goToSignUp() {
 Get.toNamed(AppRoutes.signUp );

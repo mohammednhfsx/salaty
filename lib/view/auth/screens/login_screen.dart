@@ -27,7 +27,7 @@ class LoginScreen extends GetView<LocaleController> {
               borderRadius: BorderRadius.circular(25),
             ),
             padding: const EdgeInsets.all(30),
-          
+
             child: Form(
               key: conroller.keystate,
               child: Column(
@@ -35,15 +35,15 @@ class LoginScreen extends GetView<LocaleController> {
                 children: [
                   //Welcome Back
                   CustomTextTitle(text: "Welcome_Back".tr),
-          
+
                   const SizedBox(height: 5),
                   // Sign in to continue shopping
                   CustomTextBody(textbody: "Sign_in_to_continue_shopping".tr),
-          
+
                   const SizedBox(height: 50),
                   //  Email
                   CustomTextLable(textLable: "Email_or_phone".tr),
-          
+
                   const SizedBox(height: 8),
                   CustomTextFormfield(
                     controllertextfield: conroller.email,
@@ -53,12 +53,12 @@ class LoginScreen extends GetView<LocaleController> {
                     hintText: "Enter_your_email_or_phone".tr,
                     prefixIcon: Icons.email_outlined,
                   ),
-          
+
                   const SizedBox(height: 20),
-          
+
                   //password
                   CustomTextLable(textLable: "password".tr),
-                   const SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   GetBuilder<LoginControllerImp>(
                     builder: (controller) => CustomTextFormfield(
                       controllertextfield: conroller.password,
@@ -66,7 +66,7 @@ class LoginScreen extends GetView<LocaleController> {
                       onTapicon: () {
                         controller.showPassword();
                       },
-          
+
                       valid: (val) {
                         return validInput(val!, "password", 5, 12);
                       },
@@ -77,7 +77,7 @@ class LoginScreen extends GetView<LocaleController> {
                           : Icons.visibility_outlined,
                     ),
                   ),
-          
+
                   //forget password
                   Align(
                     alignment: AlignmentGeometry.centerRight,
@@ -103,16 +103,22 @@ class LoginScreen extends GetView<LocaleController> {
                         ),
                       ),
                       onPressed: () {
-                        conroller.login();
+                        if (!conroller.isLoading) {
+                          conroller.login();
+                        }
                       },
-                      child: Text(
-                        "Sign_in".tr,
-                        style: TextStyle(color: Colors.white),
+                      child: GetBuilder<LoginControllerImp>(
+                        builder: (controller) => controller.isLoading
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                                "Sign_in".tr,
+                                style: TextStyle(color: Colors.white),
+                              ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 100),
-          
+
                   /// Sign up
                   Center(
                     child: Row(

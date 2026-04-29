@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:salaty/view/screen/cart.dart';
-import 'package:salaty/view/screen/orders.dart';
+
+import 'package:salaty/view/screen/order.dart';
 import 'package:salaty/view/screen/profile/profile.dart';
 import 'package:salaty/view/screen/home_content.dart';
-import 'package:salaty/view/screen/bottom_nav_bar.dart';
+import 'package:salaty/view/screen/widgets/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,10 +16,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
-  final List<Widget> pages = const [
-    HomeContent(),
-    Cart(),
-    Orders(),
+  final List<Widget> pages = [
+    const HomeContent(),
+    const Cart(),
+    const Orders(),
     Profile(),
   ];
 

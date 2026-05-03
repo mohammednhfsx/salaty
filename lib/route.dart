@@ -3,7 +3,6 @@ import 'package:salaty/Admin/admin.dart';
 import 'package:salaty/Admin/admin_order.dart';
 import 'package:salaty/core/constant/route.dart';
 
-import 'package:salaty/view/auth/fogotPassword/forget_password.dart';
 import 'package:salaty/view/auth/fogotPassword/resetpassword.dart';
 import 'package:salaty/view/auth/fogotPassword/success_resetpassword.dart';
 import 'package:salaty/view/auth/fogotPassword/verifycode.dart';
@@ -25,9 +24,9 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: "/", page: () => SplashScreen(), ),
   GetPage(name: AppRoutes.login, page: () => LoginScreen()),
   GetPage(name: AppRoutes.signUp, page: () => SignUp()),
-  GetPage(name: AppRoutes.forgetPassword, page: () => ForgetPassword()),
+  GetPage(name: AppRoutes.forgetPassword, page: () => ForgotPasswordScreen()),
   GetPage(name: AppRoutes.verfiyCode, page: () => Verifycode()),
-  GetPage(name: AppRoutes.resetPassword, page: () => Resetpassword()),
+  GetPage(name: AppRoutes.resetPassword, page: () => ForgotPasswordScreen()),
   GetPage(name: AppRoutes.verifySignup, page: () => VerifySignup()),
   GetPage(
     name: AppRoutes.successResetpassword,

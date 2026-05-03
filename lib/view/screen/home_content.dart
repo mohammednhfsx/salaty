@@ -100,7 +100,7 @@ class HomeContent extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 10),
-                const SizedBox(height: 100, child: ListViewGategories()),
+                const SizedBox(height: 40, child: ListViewGategories()),
 
                 const SizedBox(height: 15),
                 const CustomContainerOff(),
@@ -147,11 +147,11 @@ class HomeContent extends StatelessWidget {
                             crossAxisCount: 2,
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 20,
-                            childAspectRatio: 0.80,
+                            childAspectRatio: 0.70,
                           ),
-                      itemCount: controller.products.length,
+                   itemCount: controller.filteredProducts.length,
                       itemBuilder: (context, index) {
-                        var product = controller.products[index];
+                        var product = controller.filteredProducts[index];
                         return InkWell(
                           onTap: () {
                             Get.to(() => ProductDetails(), arguments: product);

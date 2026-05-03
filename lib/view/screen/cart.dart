@@ -49,15 +49,15 @@ class Cart extends StatelessWidget {
                     child: Lottie.asset("assets/lottile/empty.json")),
                       const SizedBox(height: 16),
                       const Text(
-                        "لا يوجد شئ في السلة",
+                        "There's nothing in the basket",
 
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 24,
                             fontFamily:'Almarai-Regular' ,
                             color: Color.fromARGB(255, 12, 9, 9)),
                       ),
                        Text(
-                    "تصفح المتجر و رتب منتجاتك في قائمة السلة للرجوع \nاليها في اي وقت",
+                 "Browse the store and add your products\n to your cart list for easy access at any time.",
                     textAlign: TextAlign.center,
 
                         style: TextStyle(

@@ -1,30 +1,66 @@
-List<Map<String, String>> categories = [
-  {"name": "Mobile", "image": "assets/images/icons8-iphone-17-pro-50.png"},
-  {"name": "Home", "image": "assets/images/icons8-multiple-devices-24.png"},
-  {"name": "accessories", "image": "assets/images/icons8-camera-32.png"},
-  {"name": "Pc", "image": "assets/images/icons8-pc-30.png"},
-  {"name": "Prenters", "image": "assets/images/icons8-printer-24.png"},
-  {"name": "Laptop", "image": "assets/images/icons8-laptop-30.png"},
-];
-//list products
-List<Map<String, String>> products = [
-  {"name": "Premium Wireless ", "image": "assets/images/photo-1578517581165-61ec5ab27a19.jpg", "price": "\$50.00",
-  "rating":"4.5",
-  "Off%":"%50",
-  "description":"Experience superior sound quality with active noise cancellation. Perfect for music lovers and professionals. Long battery life up to 30 hours."},
-  {"name": "Ultra-Thin Laptop", "image": "assets/images/photo-1759668358660-0d06064f0f84.jpg", "price": "\$100.00",
-    "rating":"4.5", "Off%":"%50",
-    "description":"Powerful performance in a slim design. Perfect for professionals and students. Intel Core i7, 16GB RAM, 512GB SSD."},
-  {"name": "Fitness Smartwatch", "image": "assets/images/photo-1665860455418-017fa50d29bc.jpg", "price": "\$700.99",
-    "rating":"4.5", "Off%":"%50",
-    "description":"Track your fitness goals with precision. Heart rate monitoring, GPS, and water resistance. Compatible with iOS and Android."},
-  {"name": "Professional Camera Kit", "image": "assets/images/photo-1729655669048-a667a0b01148.jpg", "price": "\$150.00",
-    "rating":"4.5", "Off%":"%50",
-    "description":"Capture stunning photos with this professional camera kit. Includes 24-70mm lens, camera bag, and accessories."},
-  {"name": "Gaming Console Bundle", "image": "assets/images/photo-1695028644151-1ec92bae9fb0.jpg", "price": "\$500.00",
-    "rating":"4.5", "Off%":"%50",
-    "description":"Next-gen gaming console with 2 wireless controllers. 4K gaming support and vast library of games."},
- {"name": "Ultra-Thin Laptop", "image": "assets/images/photo-1759668358660-0d06064f0f84.jpg", "price": "\$1000.00",
-   "rating":"4.5", "Off%":"%50",
-   "description":"Powerful performance in a slim design. Perfect for professionals and students. Intel Core i7, 16GB RAM, 512GB SSD."},
-];
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:salaty/controller/home/product_controller.dart';
+
+class ListViewGategories extends StatelessWidget {
+  const ListViewGategories({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Map<String, String>> categories = [
+      {"name": "All",        "image": "assets/images/icons8-pc-30.png"},
+      {"name": "Mobile",     "image": "assets/images/icons8-iphone-17-pro-50.png"},
+      {"name": "Home",       "image": "assets/images/icons8-multiple-devices-24.png"},
+      {"name": "Accessories","image": "assets/images/icons8-camera-32.png"},
+      {"name": "Pc",         "image": "assets/images/icons8-pc-30.png"},
+      {"name": "Laptop",     "image": "assets/images/icons8-laptop-30.png"},
+    ];
+
+    return GetBuilder<ProductController>(
+      builder: (ctrl) {
+        return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          itemCount: categories.length,
+          itemBuilder: (context, index) {
+            final cat = categories[index];
+            final isSelected = ctrl.selectedCategory == cat['name'];
+
+            return GestureDetector(
+              onTap: () => ctrl.filterByCategory(cat['name']!),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                margin: const EdgeInsets.symmetric(horizontal: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.teal : Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isSelected ? Colors.teal : Colors.grey.shade300,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(cat['image']!, width: 22, height: 22,
+                      color: isSelected ? Colors.white : null,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      cat['name']!,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : Colors.black87,
+                        fontWeight: isSelected
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/cart/cart_controller.dart';
 import 'package:salaty/core/constant/route.dart';
+import 'package:salaty/core/services/notification_service.dart';
 import 'package:salaty/models/order_model.dart';
 
 class OrderController extends GetxController {
@@ -17,18 +18,20 @@ class OrderController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-   
+
     if (uid != null) {
       getMyOrders();
-    } else {
-     
-    }
+    } else {}
   }
 
   // ================= إنشاء طلب =================
-  Future<void> placeOrder(CartController cart) async {
- 
-
+  Future<void> placeOrder(
+    CartController cart, {
+    required String name,
+    required String phone,
+    required String address,
+    required String city,
+  }) async {
     if (uid == null) {
       Get.snackbar("خطأ", "يجب تسجيل الدخول أولاً");
       return;
@@ -42,26 +45,30 @@ class OrderController extends GetxController {
     try {
       isLoading.value = true;
 
-     
-
       OrderModel newOrder = OrderModel(
         userId: uid!,
+        customerName: name,
+        phone: phone,
+        address: address,
+        city: city,
+
         items: cart.cartItems.toList(),
         total: cart.finaltotal,
         status: 'pending',
         createdAt: DateTime.now(),
       );
 
-   
-      DocumentReference ref =
-          await firestore.collection('orders').add(newOrder.toJson());
-     
+      DocumentReference ref = await firestore
+          .collection('orders')
+          .add(newOrder.toJson());
 
       await cart.clearCart();
-     
 
       await getMyOrders();
-     
+      await NotificationService().notifyAdmins(
+  title: '🛍️ طلب جديد!',
+  body: 'وصل طلب جديد من $name — ${cart.cartItems.length} منتج',
+);
 
       Get.snackbar(
         "تم الطلب ✅",
@@ -92,8 +99,9 @@ class OrderController extends GetxController {
           .orderBy('createdAt', descending: true)
           .get();
       print("✅ docs found: ${snap.docs.length}");
-      orders.value =
-          snap.docs.map((e) => OrderModel.fromJson(e.data(), e.id)).toList();
+      orders.value = snap.docs
+          .map((e) => OrderModel.fromJson(e.data(), e.id))
+          .toList();
     } catch (e) {
       print("❌ getMyOrders ERROR: $e");
       Get.snackbar("خطأ", "فشل تحميل الطلبات: $e");
@@ -110,8 +118,9 @@ class OrderController extends GetxController {
           .collection('orders')
           .orderBy('createdAt', descending: true)
           .get();
-      orders.value =
-          snap.docs.map((e) => OrderModel.fromJson(e.data(), e.id)).toList();
+      orders.value = snap.docs
+          .map((e) => OrderModel.fromJson(e.data(), e.id))
+          .toList();
     } catch (e) {
       Get.snackbar("خطأ", e.toString());
     } finally {
@@ -120,20 +129,49 @@ class OrderController extends GetxController {
   }
 
   // ================= تحديث حالة الطلب =================
-  Future<void> updateStatus(String orderId, String newStatus) async {
-    try {
-      await firestore
-          .collection('orders')
-          .doc(orderId)
-          .update({'status': newStatus});
-      int index = orders.indexWhere((o) => o.id == orderId);
-      if (index >= 0) {
-        orders[index] = orders[index].copyWith(status: newStatus);
-        orders.refresh();
+ Future<void> updateStatus(String orderId, String newStatus) async {
+  try {
+    await firestore.collection('orders').doc(orderId).update({
+      'status': newStatus,
+    });
+
+    // ✅ جيب token اليوزر وأرسل إشعار
+    final order = orders.firstWhere((o) => o.id == orderId);
+    final userDoc = await firestore.collection('users').doc(order.userId).get();
+    final token = userDoc.data()?['fcmToken'];
+
+    if (token != null) {
+      final messages = {
+        'confirmed': (
+          title: '✅ تم تأكيد طلبك!',
+          body: 'طلبك رقم #${orderId.substring(0, 8).toUpperCase()} تم تأكيده وسيصلك قريباً',
+        ),
+        'delivered': (
+          title: '🎉 وصل طلبك!',
+          body: 'طلبك رقم #${orderId.substring(0, 8).toUpperCase()} وصل إليك. شكراً ❤️',
+        ),
+      };
+
+      final msg = messages[newStatus];
+      if (msg != null) {
+        await NotificationService().sendToToken(
+          token: token,
+          title: msg.title,
+          body: msg.body,
+        );
       }
-      Get.snackbar("تم", "تم تحديث حالة الطلب ✅");
-    } catch (e) {
-      Get.snackbar("خطأ", e.toString());
     }
+
+    // تحديث محلي
+    int index = orders.indexWhere((o) => o.id == orderId);
+    if (index >= 0) {
+      orders[index] = orders[index].copyWith(status: newStatus);
+      orders.refresh();
+    }
+
+    Get.snackbar("تم", "تم تحديث حالة الطلب ✅");
+  } catch (e) {
+    Get.snackbar("خطأ", e.toString());
   }
+}
 }

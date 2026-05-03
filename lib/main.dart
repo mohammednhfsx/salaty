@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
@@ -7,20 +9,39 @@ import 'package:salaty/controller/cart/cart_controller.dart';
 import 'package:salaty/controller/home/product_controller.dart';
 import 'package:salaty/controller/order_controller.dart';
 import 'package:salaty/core/localization/local_change.dart';
+import 'package:salaty/core/services/notification_service.dart';
+
 import 'package:salaty/route.dart';
 import 'package:salaty/core/localization/lang/translation.dart';
 import 'package:salaty/core/services/services.dart';
 
+// ✅ Background handler لازم فوق main() مباشرة
+// @pragma('vm:entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+//   print("Background message: ${message.notification?.title}");
+// }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+
+  // 1: Firebase أولاً
+  await Firebase.initializeApp();
+
+  // 2: Background Handler
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  // 3: Services
   await initialServices();
 
+  // 4: الإشعارات
+await NotificationService().initialize();
 
+  // 5: Controllers
   Get.put(AuthController(), permanent: true);
-  Get.put(CartController(),  permanent: true);
+  Get.put(CartController(), permanent: true);
   Get.put(ProductController(), permanent: true);
-   Get.put(OrderController());
+  Get.put(OrderController(), permanent: true);
 
   runApp(const MyApp());
 }
@@ -28,21 +49,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     LocaleController controller = Get.put(LocaleController());
-    
-        //  نفحص إذا المستخدم مسجّل دخول
-        // currentUser يرجع null إذا ما في أحد مسجّل
-
     User? user = FirebaseAuth.instance.currentUser;
-
-    return GetMaterialApp(  debugShowCheckedModeBanner: false,
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       translations: Mytranslation(),
       locale: controller.language,
-      initialRoute: user == null ? "/login" : "/homepage",
-
+      initialRoute: "/",
       getPages: routes,
     );
   }

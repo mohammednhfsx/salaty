@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:salaty/controller/order_controller.dart';
 import 'package:salaty/models/order_model.dart';
 
-
 class AdminOrdersScreen extends StatefulWidget {
   const AdminOrdersScreen({super.key});
 
@@ -95,12 +94,13 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
           // ══════════════════════════════
           Obx(() {
             final orders = ctrl.orders;
-            final pending =
-                orders.where((o) => o.status == 'pending').length;
-            final confirmed =
-                orders.where((o) => o.status == 'confirmed').length;
-            final delivered =
-                orders.where((o) => o.status == 'delivered').length;
+            final pending = orders.where((o) => o.status == 'pending').length;
+            final confirmed = orders
+                .where((o) => o.status == 'confirmed')
+                .length;
+            final delivered = orders
+                .where((o) => o.status == 'delivered')
+                .length;
 
             return Container(
               margin: const EdgeInsets.all(12),
@@ -110,30 +110,36 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.05), blurRadius: 6)
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 6,
+                  ),
                 ],
               ),
               child: Row(
                 children: [
                   _StatItem(
-                      label: "الكل",
-                      count: orders.length,
-                      color: Colors.grey),
+                    label: "الكل",
+                    count: orders.length,
+                    color: Colors.grey,
+                  ),
                   _divider(),
                   _StatItem(
-                      label: "انتظار",
-                      count: pending,
-                      color: Colors.orange),
+                    label: "انتظار",
+                    count: pending,
+                    color: Colors.orange,
+                  ),
                   _divider(),
                   _StatItem(
-                      label: "مؤكد",
-                      count: confirmed,
-                      color: Colors.blue),
+                    label: "مؤكد",
+                    count: confirmed,
+                    color: Colors.blue,
+                  ),
                   _divider(),
                   _StatItem(
-                      label: "مسلّم",
-                      count: delivered,
-                      color: Colors.green),
+                    label: "مسلّم",
+                    count: delivered,
+                    color: Colors.green,
+                  ),
                 ],
               ),
             );
@@ -152,23 +158,28 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
               final filtered = selectedFilter == null
                   ? ctrl.orders
                   : ctrl.orders
-                      .where((o) => o.status == selectedFilter)
-                      .toList();
+                        .where((o) => o.status == selectedFilter)
+                        .toList();
 
               if (filtered.isEmpty) {
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.inbox_outlined,
-                          size: 70, color: Colors.grey[300]),
+                      Icon(
+                        Icons.inbox_outlined,
+                        size: 70,
+                        color: Colors.grey[300],
+                      ),
                       const SizedBox(height: 12),
                       Text(
                         selectedFilter == null
                             ? "لا توجد طلبات"
                             : "لا توجد طلبات بهذه الحالة",
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 16),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
                       ),
                     ],
                   ),
@@ -190,8 +201,11 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
   }
 
   Widget _divider() => Container(
-      width: 1, height: 30, color: Colors.grey[200],
-      margin: const EdgeInsets.symmetric(horizontal: 8));
+    width: 1,
+    height: 30,
+    color: Colors.grey[200],
+    margin: const EdgeInsets.symmetric(horizontal: 8),
+  );
 }
 
 // ══════════════════════════════════════════════
@@ -203,17 +217,23 @@ class _AdminOrderCard extends StatelessWidget {
 
   Color get statusColor {
     switch (order.status) {
-      case 'confirmed': return Colors.blue;
-      case 'delivered': return Colors.green;
-      default: return Colors.orange;
+      case 'confirmed':
+        return Colors.blue;
+      case 'delivered':
+        return Colors.green;
+      default:
+        return Colors.orange;
     }
   }
 
   String get statusText {
     switch (order.status) {
-      case 'confirmed': return 'تم التأكيد';
-      case 'delivered': return 'تم التسليم';
-      default: return 'قيد الانتظار';
+      case 'confirmed':
+        return 'تم التأكيد';
+      case 'delivered':
+        return 'تم التسليم';
+      default:
+        return 'قيد الانتظار';
     }
   }
 
@@ -227,8 +247,7 @@ class _AdminOrderCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.06), blurRadius: 8)
+          BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 8),
         ],
       ),
       child: Column(
@@ -236,12 +255,12 @@ class _AdminOrderCard extends StatelessWidget {
         children: [
           // ── Header ──
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
               color: statusColor.withOpacity(0.08),
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
             ),
             child: Row(
               children: [
@@ -253,13 +272,17 @@ class _AdminOrderCard extends StatelessWidget {
                       Text(
                         "طلب #${order.id!.substring(0, 8).toUpperCase()}",
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
                       if (order.createdAt != null)
                         Text(
                           "${order.createdAt!.day}/${order.createdAt!.month}/${order.createdAt!.year}  ${order.createdAt!.hour}:${order.createdAt!.minute.toString().padLeft(2, '0')}",
                           style: const TextStyle(
-                              color: Colors.grey, fontSize: 11),
+                            color: Colors.grey,
+                            fontSize: 11,
+                          ),
                         ),
                     ],
                   ),
@@ -267,16 +290,73 @@ class _AdminOrderCard extends StatelessWidget {
                 // الحالة الحالية
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 4),
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text(statusText,
-                      style: TextStyle(
-                          color: statusColor,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold)),
+                  child: Text(
+                    statusText,
+                    style: TextStyle(
+                      color: statusColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(12),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "الزبون: ",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+
+                    Expanded(
+                      child: Text(
+                        order.customerName,
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("الهاتف: "),
+                    Expanded(
+                      child: Text(
+                        order.phone,
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("العنوان: "),
+                    Expanded(
+                      child: Text(
+                        order.address,
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("المدينة: "),
+                    Expanded(
+                      child: Text(order.city, textDirection: TextDirection.ltr),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -287,40 +367,56 @@ class _AdminOrderCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 10, 12, 0),
             child: Column(
               children: order.items
-                  .map((item) => Padding(
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                item.image,
-                                width: 40, height: 40,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => Container(
-                                  width: 40, height: 40,
-                                  color: Colors.grey[200],
-                                  child: const Icon(Icons.broken_image,
-                                      color: Colors.grey, size: 18),
+                  .map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              item.image,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                width: 40,
+                                height: 40,
+                                color: Colors.grey[200],
+                                child: const Icon(
+                                  Icons.broken_image,
+                                  color: Colors.grey,
+                                  size: 18,
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                                child: Text(item.name,
-                                    style: const TextStyle(fontSize: 13))),
-                            Text("×${item.quantity}",
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 12)),
-                            const SizedBox(width: 6),
-                            Text(
-                              "${(item.price * item.quantity).toStringAsFixed(0)} د.ع",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 12),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              item.name,
+                              style: const TextStyle(fontSize: 13),
                             ),
-                          ],
-                        ),
-                      ))
+                          ),
+                          Text(
+                            "×${item.quantity}",
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            "${(item.price * item.quantity).toStringAsFixed(0)} د.ع",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           ),
@@ -333,14 +429,17 @@ class _AdminOrderCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("المجموع",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text(
+                  "المجموع",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 Text(
                   "${order.total.toStringAsFixed(0)} د.ع",
                   style: const TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),
@@ -357,8 +456,10 @@ class _AdminOrderCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 0, 12, 14),
             child: Row(
               children: [
-                const Text("تغيير الحالة: ",
-                    style: TextStyle(fontSize: 12, color: Colors.grey)),
+                const Text(
+                  "تغيير الحالة: ",
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
                 const SizedBox(width: 8),
                 _StatusButton(
                   label: "انتظار",
@@ -389,8 +490,7 @@ class _AdminOrderCard extends StatelessWidget {
   }
 
   // ✅ نطلب تأكيد قبل تغيير الحالة — منعاً للأخطاء العرضية
-  void _confirmChange(
-      OrderController ctrl, String orderId, String newStatus) {
+  void _confirmChange(OrderController ctrl, String orderId, String newStatus) {
     if (order.status == newStatus) return; // نفس الحالة — ما نسوي شي
 
     final labels = {
@@ -401,8 +501,7 @@ class _AdminOrderCard extends StatelessWidget {
 
     Get.defaultDialog(
       title: "تأكيد التغيير",
-      middleText:
-          "تغيير حالة الطلب إلى \"${labels[newStatus]}\"؟",
+      middleText: "تغيير حالة الطلب إلى \"${labels[newStatus]}\"؟",
       textConfirm: "نعم",
       textCancel: "لا",
       confirmTextColor: Colors.white,
@@ -480,7 +579,8 @@ class _FilterChip extends StatelessWidget {
           color: isSelected ? color : color.withOpacity(0.08),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-              color: isSelected ? color : color.withOpacity(0.3)),
+            color: isSelected ? color : color.withOpacity(0.3),
+          ),
         ),
         child: Text(
           label,
@@ -500,8 +600,11 @@ class _StatItem extends StatelessWidget {
   final int count;
   final Color color;
 
-  const _StatItem(
-      {required this.label, required this.count, required this.color});
+  const _StatItem({
+    required this.label,
+    required this.count,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -511,11 +614,12 @@ class _StatItem extends StatelessWidget {
           Text(
             count.toString(),
             style: TextStyle(
-                fontSize: 22, fontWeight: FontWeight.bold, color: color),
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
           ),
-          Text(label,
-              style:
-                  const TextStyle(fontSize: 11, color: Colors.grey)),
+          Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
         ],
       ),
     );

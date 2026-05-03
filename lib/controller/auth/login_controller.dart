@@ -2,8 +2,8 @@
 import 'package:get/get.dart';
 
 import 'package:salaty/core/constant/route.dart';
-import 'package:salaty/view/auth/fogotPassword/forget_password.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
+import 'package:salaty/view/auth/fogotPassword/resetpassword.dart';
 
 
  abstract  class LoginController extends GetxController {
@@ -28,7 +28,7 @@ void showPassword(){
 }
  @override
   void goToforgotpassword(){
-      Get.to(ForgetPassword());
+      Get.to(ForgotPasswordScreen());
 
  }
 

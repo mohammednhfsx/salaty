@@ -18,6 +18,20 @@ class AddProductPage extends StatelessWidget {
       nameController.text = product!.name;
       priceController.text = product!.price.toString();
       descController.text = product!.description;
+
+      final validCategories = [
+        'Mobile',
+        'Home',
+        'Accessories',
+        'Pc',
+        'Laptop',
+        'Other',
+      ];
+      controller.selectedCategory = validCategories.contains(product!.category)
+          ? product!.category
+          : 'Other';
+    } else {
+      controller.selectedCategory = 'Mobile'; // ✅ reset عند الإضافة
     }
     controller.imageFile = null;
   }
@@ -27,9 +41,7 @@ class AddProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isEdit ? "تعديل المنتج" : "لوحة الأدمن"),
-      ),
+      appBar: AppBar(title: Text(isEdit ? "تعديل المنتج" : "لوحة الأدمن")),
       body: GetBuilder<ProductController>(
         builder: (c) {
           return SingleChildScrollView(
@@ -37,7 +49,6 @@ class AddProductPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 // ✅ زر إدارة الطلبات — في الأعلى بارز
                 Container(
                   width: double.infinity,
@@ -103,6 +114,24 @@ class AddProductPage extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                 ),
+                const SizedBox(height: 15),
+                DropdownButtonFormField<String>(
+                  initialValue: controller.selectedCategory,
+                  decoration: const InputDecoration(
+                    labelText: "الفئة",
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.category_outlined),
+                  ),
+                  items: controller
+                      .categoryList // ✅ من الـ Controller مباشرة
+                      .map(
+                        (cat) => DropdownMenuItem(value: cat, child: Text(cat)),
+                      )
+                      .toList(),
+                  onChanged: (val) {
+                    if (val != null) controller.setCategory(val);
+                  },
+                ),
 
                 const SizedBox(height: 15),
 
@@ -110,7 +139,11 @@ class AddProductPage extends StatelessWidget {
                 if (c.imageFile != null)
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.file(c.imageFile!, height: 150, fit: BoxFit.cover),
+                    child: Image.file(
+                      c.imageFile!,
+                      height: 150,
+                      fit: BoxFit.cover,
+                    ),
                   )
                 else if (isEdit && product!.image.isNotEmpty)
                   ClipRRect(
@@ -119,8 +152,11 @@ class AddProductPage extends StatelessWidget {
                       product!.image,
                       height: 150,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
-                          const Icon(Icons.broken_image, size: 80, color: Colors.grey),
+                      errorBuilder: (_, __, ___) => const Icon(
+                        Icons.broken_image,
+                        size: 80,
+                        color: Colors.grey,
+                      ),
                     ),
                   )
                 else
@@ -157,8 +193,10 @@ class AddProductPage extends StatelessWidget {
                                 id: product!.id ?? '',
                                 name: nameController.text.trim(),
                                 desc: descController.text.trim(),
-                                price: double.tryParse(priceController.text) ?? 0,
+                                price:
+                                    double.tryParse(priceController.text) ?? 0,
                                 oldImageUrl: product!.image,
+                                category: c.selectedCategory,
                               );
                             } else {
                               if (c.imageFile == null) {
@@ -168,7 +206,9 @@ class AddProductPage extends StatelessWidget {
                               c.addProduct(
                                 name: nameController.text.trim(),
                                 desc: descController.text.trim(),
-                                price: double.tryParse(priceController.text) ?? 0,
+                                price:
+                                    double.tryParse(priceController.text) ?? 0,
+                                category: c.selectedCategory,
                               );
                             }
                           },

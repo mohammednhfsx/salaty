@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:salaty/core/services/notification_service.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -43,6 +44,7 @@ void onInit() {
     if (!verified) return false; // ← لا يدخل إذا ما أكد
     
     await getUserData();
+     NotificationService().saveToken();
     update();
     return true;
   } catch (e) {

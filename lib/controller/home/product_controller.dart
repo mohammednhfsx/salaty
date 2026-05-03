@@ -14,6 +14,17 @@ class ProductController extends GetxController {
   File? imageFile;
   bool isLoading = false;
   bool isShimmmer=false;
+final List<String> categoryList = [
+  'Mobile', 'Home', 'Accessories', 'Pc', 'Laptop', 'Other'
+];
+
+String selectedCategory = 'All'; // افتراضي آمن
+
+void setCategory(String cat) {
+  selectedCategory = cat;
+  update();
+}
+  
 
   // ✅ حط الـ API Key تبعك هنا
   final String imgbbApiKey = "c8b8da5673b513d90e323aa002148077";
@@ -24,6 +35,20 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
+
+
+List<ProductModel> get filteredProducts {
+  if (selectedCategory == 'All') return products;
+  return products
+      .where((p) => p.category == selectedCategory)
+      .toList();
+}
+
+// ✅ دالة الفلترة
+void filterByCategory(String category) {
+  selectedCategory = category;
+  update();
+}
   // ================= pick image =================
   Future<void> pickImage() async {
     final picked = await ImagePicker().pickImage(
@@ -84,6 +109,7 @@ class ProductController extends GetxController {
     required String name,
     required String desc,
     required double price,
+      required String category,
   }) async {
     if (imageFile == null) {
       Get.snackbar("خطأ", "اختر صورة أولاً");
@@ -105,6 +131,7 @@ class ProductController extends GetxController {
         "description": desc,
         "price": price,
         "image": imageUrl,
+          "category": category,
       });
 
       imageFile = null;
@@ -126,6 +153,7 @@ class ProductController extends GetxController {
     required String desc,
     required double price,
     required String oldImageUrl,
+     required String category,
   }) async {
     try {
       isLoading = true;
@@ -149,6 +177,7 @@ class ProductController extends GetxController {
         "description": desc,
         "price": price,
         "image": imageUrl,
+          "category": category, 
       });
 
       imageFile = null;

@@ -15,7 +15,7 @@ class VerifyCodeControllerImp extends VerifyCodeController {
 
   @override
   void goT0ResetPassword() {
-    Get.to(Resetpassword()); 
+    Get.to(ForgotPasswordScreen()); 
   }
 
   @override

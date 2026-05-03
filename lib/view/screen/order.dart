@@ -38,7 +38,7 @@ class _OrdersState extends State<Orders> {
      
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: const Text(
-          "طلباتي",
+          "My requests",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
@@ -61,10 +61,10 @@ class _OrdersState extends State<Orders> {
                 Icon(Icons.receipt_long_outlined,
                     size: 80, color: Colors.grey[300]),
                 const SizedBox(height: 16),
-                const Text("لا توجد طلبات بعد",
+                const Text("No orders yet",
                     style: TextStyle(fontSize: 18, color: Colors.grey)),
                 const SizedBox(height: 8),
-                const Text("اشترِ شيئاً ليظهر هنا!",
+                const Text("Buy something to show up here!",
                     style: TextStyle(color: Colors.grey)),
               ],
             ),
@@ -98,9 +98,9 @@ class _OrderCard extends StatelessWidget {
 
   String get statusText {
     switch (order.status) {
-      case 'confirmed': return 'تم التأكيد';
-      case 'delivered': return 'تم التسليم';
-      default: return 'قيد الانتظار';
+      case 'confirmed': return 'Confirmed';
+      case 'delivered': return 'Delivered.';
+      default: return 'On hold.';
     }
   }
 
@@ -129,7 +129,7 @@ class _OrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "طلب #${order.id!.substring(0, 8).toUpperCase()}",
+                  "order #${order.id!.substring(0, 8).toUpperCase()}",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14),
                 ),
@@ -193,7 +193,7 @@ class _OrderCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("المجموع الكلي",
+                    const Text("total",
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     Text(
                       "${order.total.toStringAsFixed(0)} د.ع",

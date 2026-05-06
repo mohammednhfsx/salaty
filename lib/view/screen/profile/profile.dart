@@ -23,24 +23,19 @@ class Profile extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(color:   Colors.teal,),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.only( top: 45),
                 child: Obx(() {
                   if (controller.isLoading.value) {
                     return const CircularProgressIndicator();
                   }
 
-                  return Row(
+                  return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       buildUserAvatar(controller.userData['name'] ?? ""),
 
                       SizedBox(width: 15),
-
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
+                       Text(
                             controller.userData['name'] ?? "Loading...",
                             style: TextStyle(
                               fontSize: 20,
@@ -58,8 +53,8 @@ class Profile extends StatelessWidget {
                               color: Colors.white70,
                             ),
                           ),
-                        ],
-                      ),
+
+                    
                     ],
                   );
                 }),

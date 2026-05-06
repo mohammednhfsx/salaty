@@ -15,5 +15,6 @@ class AppRoutes {
   static const String addProductPage = "/AddProductPage";
    static const String adminOrdersScreen = "/adminOrdersScreen";
      static const String checkoutScreen = "/CheckoutScreen";
+      static const String notifications = "/NotificationsScreen";
   
 }

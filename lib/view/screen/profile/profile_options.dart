@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
 import 'package:salaty/controller/order_controller.dart';
-
 import 'package:salaty/controller/profiles_controller.dart';
 import 'package:salaty/core/constant/route.dart';
+import 'package:salaty/core/localization/local_change.dart';
 import 'package:salaty/core/services/location_service.dart';
 
 class ProfileOptions extends StatelessWidget {
@@ -69,12 +69,19 @@ class ProfileOptions extends StatelessWidget {
             subtitle: "Manage your delivery addresses",
             onTap: () => _showAddresses(context),
           ),
+           buildItem(
+            icon: Icons.language,
+            title: "language",
+            subtitle: "Ghange language",
+            onTap: () =>_showLanguageSheet(context), 
+          ),
               buildItem(color: Colors.red,
             icon: Icons.logout_rounded,
             title: "Logout ",
             subtitle: "signout of account",
             onTap: () => _showLogoutDialog(context),
           ),
+           
         ],
       ),
     );
@@ -598,7 +605,7 @@ void _showAddresses(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "عناويني",
+                      "My addresses",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -608,7 +615,7 @@ void _showAddresses(BuildContext context) {
                       onPressed: () => _showAddAddressDialog(context),
                       icon: const Icon(Icons.add, color: Colors.teal),
                       label: const Text(
-                        "إضافة",
+                        "add",
                         style: TextStyle(color: Colors.teal),
                       ),
                     ),
@@ -634,7 +641,7 @@ void _showAddresses(BuildContext context) {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        "لا توجد عناوين محفوظة",
+                        "No saved addresses",
                         style: TextStyle(color: Colors.grey, fontSize: 15),
                       ),
                     ],
@@ -682,9 +689,9 @@ void _showAddresses(BuildContext context) {
                         onPressed: () {
                           Get.defaultDialog(
                             title: "حذف العنوان",
-                            middleText: "هل تريد حذف هذا العنوان؟",
-                            textConfirm: "حذف",
-                            textCancel: "إلغاء",
+                            middleText: "Do you want to delete this address?",
+                            textConfirm: "delete",
+                            textCancel: "cancel",
                             confirmTextColor: Colors.white,
                             buttonColor: Colors.red,
                             onConfirm: () {
@@ -744,24 +751,24 @@ void _showAddAddressDialog(BuildContext context) {
           ),
           const SizedBox(height: 16),
           const Text(
-            "إضافة عنوان جديد",
+            "Add a new address",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
 
           _addressField(
             labelCtrl,
-            "التسمية (مثال: البيت، العمل)",
+            "Naming (e.g., home, work)",
             Icons.label_outline,
           ),
           const SizedBox(height: 10),
-          _addressField(cityCtrl, "المدينة", Icons.location_city_outlined),
+          _addressField(cityCtrl, "City", Icons.location_city_outlined),
           const SizedBox(height: 10),
-          _addressField(addressCtrl, "العنوان التفصيلي", Icons.home_outlined),
+          _addressField(addressCtrl, "Detailed address", Icons.home_outlined),
           const SizedBox(height: 10),
           _addressField(
             phoneCtrl,
-            "رقم الهاتف",
+           "phone number",
             Icons.phone_outlined,
             type: TextInputType.phone,
           ),
@@ -807,8 +814,8 @@ void _showAddAddressDialog(BuildContext context) {
                     : const Icon(Icons.my_location, color: Colors.teal),
                 label: Text(
                   isLocating.value
-                      ? "جاري تحديد موقعك..."
-                      : "تحديد موقعي تلقائياً",
+                      ? "Your location is being determined..."
+                      : "Automatically locate me",
                   style: const TextStyle(color: Colors.teal),
                 ),
               ),
@@ -831,7 +838,7 @@ void _showAddAddressDialog(BuildContext context) {
                     cityCtrl.text.isEmpty ||
                     addressCtrl.text.isEmpty ||
                     phoneCtrl.text.isEmpty) {
-                  Get.snackbar("خطأ", "الرجاء ملء جميع الحقول");
+                  Get.snackbar( "Error", "Please fill in all fields");
                   return;
                 }
                 Get.back(); // أغلق هذا الـ sheet
@@ -843,7 +850,7 @@ void _showAddAddressDialog(BuildContext context) {
                 );
               },
               child: const Text(
-                "حفظ العنوان",
+               "Save address",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
@@ -962,6 +969,112 @@ void _showLogoutDialog(BuildContext context) {
       );
     },
   );
+  
+}
+void _showLanguageSheet(BuildContext context) {
+  final controller = Get.find<LocaleController>();
+
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) => Padding(
+      padding: const EdgeInsets.all(20),
+      child: Obx(
+        () => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _LangOption(
+              value: 'ar',
+              selected: controller.selectedLang.value,
+              title: "العربية",
+              subtitle: "Arabic",
+              color: Colors.green,
+              onTap: () => controller.changeLang("ar"),
+            ),
+            const SizedBox(height: 10),
+            _LangOption(
+              value: 'en',
+              selected: controller.selectedLang.value,
+              title: "English",
+              subtitle: "الإنجليزية",
+              color: Colors.blue,
+              onTap: () => controller.changeLang("en"),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+class _LangOption extends StatelessWidget {
+  final String value;
+  final String selected;
+  final String title;
+  final String subtitle;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _LangOption({
+    required this.value,
+    required this.selected,
+    required this.title,
+    required this.subtitle,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelected = value == selected;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: isSelected ? color.withOpacity(0.06) : Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isSelected ? color : Colors.grey.shade200,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.language, color: color),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? color : Colors.black,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              isSelected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_off,
+              color: isSelected ? color : Colors.grey,
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 

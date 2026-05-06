@@ -191,8 +191,8 @@ class Cart extends StatelessWidget {
                 children: [
                   _buildRow("Subtotal",
                       "${cartController.total.toStringAsFixed(2)} د.ع"),
-                  _buildRow("Shipping",
-                      "${cartController.shoping.toStringAsFixed(2)} د.ع"),
+                  // _buildRow("Shipping",
+                  //     "${cartController.shoping.toStringAsFixed(2)} د.ع"),
                   const Divider(),
                   _buildRow(
                       "Total",

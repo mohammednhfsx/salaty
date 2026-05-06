@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
 import 'package:salaty/controller/cart/cart_controller.dart';
 import 'package:salaty/controller/home/product_controller.dart';
+import 'package:salaty/controller/notification_controller.dart';
 import 'package:salaty/controller/order_controller.dart';
 import 'package:salaty/core/localization/local_change.dart';
 import 'package:salaty/core/services/notification_service.dart';
@@ -42,6 +43,7 @@ await NotificationService().initialize();
   Get.put(CartController(), permanent: true);
   Get.put(ProductController(), permanent: true);
   Get.put(OrderController(), permanent: true);
+  Get.put(NotificationController(), permanent: true);
 
   runApp(const MyApp());
 }

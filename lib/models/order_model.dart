@@ -12,6 +12,8 @@ class OrderModel {
   final String phone;
   final String address;
   final String city;
+  final String paymentMethod;
+  final double platformFee; 
 
   OrderModel({
     this.id,
@@ -23,7 +25,7 @@ class OrderModel {
     required this.customerName,
     required this.phone,
     required this.address,
-    required this.city,
+    required this.city, required this.paymentMethod, required this.platformFee,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json, String id) {
@@ -39,6 +41,9 @@ class OrderModel {
           .toList(),
       total: (json['total'] as num?)?.toDouble() ?? 0.0,
       status: json['status'] ?? 'pending',
+      paymentMethod: json['paymentMethod'] ?? 'cash',
+      platformFee: (json['platformFee'] as num?)?.toDouble() ?? 0.0,
+      
 
       createdAt: (json['createdAt'] as Timestamp?)?.toDate(),
     );
@@ -55,6 +60,8 @@ class OrderModel {
       'total': total,
       'status': status,
       'createdAt': FieldValue.serverTimestamp(),
+      'paymentMethod': paymentMethod,
+      'platformFee': platformFee,
     };
   }
 
@@ -69,7 +76,7 @@ class OrderModel {
        customerName: customerName,
     phone: phone,              
     address: address,         
-    city: city,  
+    city: city, paymentMethod: paymentMethod, platformFee: platformFee,  
     );
   }
 }

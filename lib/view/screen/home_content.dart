@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:salaty/Admin/admin.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
 import 'package:salaty/controller/home/product_controller.dart';
+import 'package:salaty/core/constant/route.dart';
 
 import 'package:salaty/core/widgets/custom_container_off.dart';
 import 'package:salaty/core/widgets/custom_text.dart';
@@ -59,7 +60,7 @@ class HomeContent extends StatelessWidget {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {Get.toNamed(AppRoutes.notifications);},
                             child: Container(
                               height: 40,
                               width: 40,

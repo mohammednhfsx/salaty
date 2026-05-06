@@ -53,47 +53,83 @@ class Search extends SearchDelegate {
       );
     }
 
-    return ListView.builder(
-      itemCount: results.length,
-      itemBuilder: (context, index) {
-        final product = results[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          child: Container(decoration: BoxDecoration(  color: const Color.fromARGB(255, 255, 255, 255),
-              borderRadius: BorderRadius.circular(10),
-              border:BoxBorder.all(color: Colors.grey,width: 1,) ),
-              
-            child: ListTile(
-              // ✅ صورة المنتج في القائمة
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+  return GridView.builder(
+  padding: const EdgeInsets.all(10),
+  itemCount: results.length,
+  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2, // عمودين
+    crossAxisSpacing: 10,
+    mainAxisSpacing: 10,
+    childAspectRatio: 0.9, // يتحكم بالطول
+  ),
+  itemBuilder: (context, index) {
+    final product = results[index];
+
+    return GestureDetector(
+      onTap: () {
+        close(context, null);
+        Get.to(() => const ProductDetails(), arguments: product);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 5,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ✅ الصورة
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   product.image,
-                  width: 70,
-                  height: 70,
-            
+                  width: double.infinity,
+                  fit: BoxFit.contain,
                   errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.broken_image, color: Colors.grey),
+                      const Icon(Icons.broken_image),
                 ),
               ),
-              title: Text(
-                product.name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(
-                "${product.price} د.ع",
-                style: const TextStyle(color: Colors.blue),
-              ),
-              // ✅ عند الضغط → نفتح صفحة تفاصيل المنتج
-              onTap: () {
-                close(context, null); // نغلق البحث أولاً
-                Get.to(() => const ProductDetails(), arguments: product);
-              },
             ),
-          ),
-        );
-      },
+
+            const SizedBox(height: 8),
+
+            // ✅ الاسم
+            Text(
+              product.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 4),
+
+           
+
+            const SizedBox(height: 6),
+
+            // ✅ السعر
+            Text(
+              "${product.price} د.ع",
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+  },
+);
   }
 
   // ✅ أزرار على يمين شريط البحث

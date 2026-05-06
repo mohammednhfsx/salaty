@@ -56,6 +56,8 @@ dependencies:
   shimmer: ^3.0.0
   firebase_messaging: ^16.2.0
   flutter_local_notifications: ^21.0.0
+  url_launcher: ^6.3.2
+  dart_jsonwebtoken: ^3.4.1
   
  
  
@@ -94,6 +96,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/lottile/
+    - assets/service_account.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

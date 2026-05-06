@@ -100,7 +100,7 @@ class _OrderCard extends StatelessWidget {
     switch (order.status) {
       case 'confirmed': return 'Confirmed';
       case 'delivered': return 'Delivered.';
-      default: return 'On hold.';
+      default: return 'pending';
     }
   }
 

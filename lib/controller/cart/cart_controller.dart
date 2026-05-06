@@ -118,11 +118,7 @@ class CartController extends GetxController {
     return cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
   }
 
-  //  الشحن: مجاني فوق 50، وإلا 5 دولار
-  double get shoping {
-    if (cartItems.isEmpty) return 0;
-    return total >= 50 ? 5 : 0;
-  }
 
-  double get finaltotal => total + shoping;
+
+  double get finaltotal => total ;
 }

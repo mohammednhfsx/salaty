@@ -18,10 +18,9 @@ class OrderController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     if (uid != null) {
       getMyOrders();
-    } else {}
+    }
   }
 
   // ================= إنشاء طلب =================
@@ -31,6 +30,7 @@ class OrderController extends GetxController {
     required String phone,
     required String address,
     required String city,
+    required String paymentMethod,
   }) async {
     if (uid == null) {
       Get.snackbar("خطأ", "يجب تسجيل الدخول أولاً");
@@ -44,6 +44,8 @@ class OrderController extends GetxController {
 
     try {
       isLoading.value = true;
+      final double platformFee =
+          double.parse((cart.finaltotal * 0.01).toStringAsFixed(0));
 
       OrderModel newOrder = OrderModel(
         userId: uid!,
@@ -51,24 +53,23 @@ class OrderController extends GetxController {
         phone: phone,
         address: address,
         city: city,
-
+        paymentMethod: paymentMethod,
         items: cart.cartItems.toList(),
         total: cart.finaltotal,
         status: 'pending',
         createdAt: DateTime.now(),
+        platformFee: platformFee,
       );
 
-      DocumentReference ref = await firestore
-          .collection('orders')
-          .add(newOrder.toJson());
+      await firestore.collection('orders').add(newOrder.toJson());
 
       await cart.clearCart();
-
       await getMyOrders();
+
       await NotificationService().notifyAdmins(
-  title: '🛍️ طلب جديد!',
-  body: 'وصل طلب جديد من $name — ${cart.cartItems.length} منتج',
-);
+        title: '🛍️ طلب جديد!',
+        body: 'وصل طلب جديد من $name — ${cart.cartItems.length} منتج',
+      );
 
       Get.snackbar(
         "تم الطلب ✅",
@@ -90,7 +91,6 @@ class OrderController extends GetxController {
   // ================= جلب طلبات المستخدم =================
   Future<void> getMyOrders() async {
     if (uid == null) return;
-    print("🟡 getMyOrders — uid: $uid");
     try {
       isLoading.value = true;
       var snap = await firestore
@@ -98,10 +98,8 @@ class OrderController extends GetxController {
           .where('userId', isEqualTo: uid)
           .orderBy('createdAt', descending: true)
           .get();
-      print("✅ docs found: ${snap.docs.length}");
-      orders.value = snap.docs
-          .map((e) => OrderModel.fromJson(e.data(), e.id))
-          .toList();
+      orders.value =
+          snap.docs.map((e) => OrderModel.fromJson(e.data(), e.id)).toList();
     } catch (e) {
       print("❌ getMyOrders ERROR: $e");
       Get.snackbar("خطأ", "فشل تحميل الطلبات: $e");
@@ -118,9 +116,8 @@ class OrderController extends GetxController {
           .collection('orders')
           .orderBy('createdAt', descending: true)
           .get();
-      orders.value = snap.docs
-          .map((e) => OrderModel.fromJson(e.data(), e.id))
-          .toList();
+      orders.value =
+          snap.docs.map((e) => OrderModel.fromJson(e.data(), e.id)).toList();
     } catch (e) {
       Get.snackbar("خطأ", e.toString());
     } finally {
@@ -129,49 +126,59 @@ class OrderController extends GetxController {
   }
 
   // ================= تحديث حالة الطلب =================
- Future<void> updateStatus(String orderId, String newStatus) async {
-  try {
-    await firestore.collection('orders').doc(orderId).update({
-      'status': newStatus,
-    });
+  Future<void> updateStatus(String orderId, String newStatus) async {
+    try {
+      await firestore.collection('orders').doc(orderId).update({
+        'status': newStatus,
+      });
 
-    // ✅ جيب token اليوزر وأرسل إشعار
-    final order = orders.firstWhere((o) => o.id == orderId);
-    final userDoc = await firestore.collection('users').doc(order.userId).get();
-    final token = userDoc.data()?['fcmToken'];
+      final order = orders.firstWhere((o) => o.id == orderId);
+      final userDoc =
+          await firestore.collection('users').doc(order.userId).get();
+      final token = userDoc.data()?['fcmToken'];
 
-    if (token != null) {
       final messages = {
         'confirmed': (
           title: '✅ تم تأكيد طلبك!',
-          body: 'طلبك رقم #${orderId.substring(0, 8).toUpperCase()} تم تأكيده وسيصلك قريباً',
+          body:
+              'طلبك رقم #${orderId.substring(0, 8).toUpperCase()} تم تأكيده وسيصلك قريباً',
         ),
         'delivered': (
           title: '🎉 وصل طلبك!',
-          body: 'طلبك رقم #${orderId.substring(0, 8).toUpperCase()} وصل إليك. شكراً ❤️',
+          body:
+              'طلبك رقم #${orderId.substring(0, 8).toUpperCase()} وصل إليك. شكراً ❤️',
         ),
       };
 
       final msg = messages[newStatus];
       if (msg != null) {
-        await NotificationService().sendToToken(
-          token: token,
+        // ✅ أرسل إشعار FCM
+        if (token != null) {
+          await NotificationService().sendToToken(
+            token: token,
+            title: msg.title,
+            body: msg.body,
+          );
+        }
+
+        // ✅ احفظ الإشعار في Firestore عشان يظهر في شاشة الإشعارات
+        await NotificationService().saveNotificationToUser(
+          userId: order.userId,
           title: msg.title,
           body: msg.body,
         );
       }
-    }
 
-    // تحديث محلي
-    int index = orders.indexWhere((o) => o.id == orderId);
-    if (index >= 0) {
-      orders[index] = orders[index].copyWith(status: newStatus);
-      orders.refresh();
-    }
+      // تحديث محلي
+      int index = orders.indexWhere((o) => o.id == orderId);
+      if (index >= 0) {
+        orders[index] = orders[index].copyWith(status: newStatus);
+        orders.refresh();
+      }
 
-    Get.snackbar("تم", "تم تحديث حالة الطلب ✅");
-  } catch (e) {
-    Get.snackbar("خطأ", e.toString());
+      Get.snackbar("تم", "تم تحديث حالة الطلب ✅");
+    } catch (e) {
+      Get.snackbar("خطأ", e.toString());
+    }
   }
-}
 }

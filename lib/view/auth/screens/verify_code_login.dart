@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salaty/controller/login_verify_controller.dart';
+import 'package:salaty/controller/auth/login_verify_controller.dart';
 
 import 'package:salaty/core/localization/local_change.dart';
 import 'package:salaty/core/theme/colors.dart';

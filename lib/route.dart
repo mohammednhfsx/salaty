@@ -14,6 +14,7 @@ import 'package:salaty/view/auth/screens/verify_code_login.dart';
 import 'package:salaty/view/auth/screens/verify_code_signup.dart';
 import 'package:salaty/view/screen/cart.dart';
 import 'package:salaty/view/screen/checkout_screen.dart';
+import 'package:salaty/view/screen/notifications_screen.dart';
 import 'package:salaty/view/screen/widgets/nav_page.dart';
 
 import 'package:salaty/view/screen/order.dart';
@@ -41,6 +42,8 @@ List<GetPage<dynamic>>? routes = [
     GetPage(name: AppRoutes.addProductPage, page: () => AddProductPage()),
         GetPage(name: AppRoutes.adminOrdersScreen, page: () => AdminOrdersScreen()),
          GetPage(name: AppRoutes.checkoutScreen, page: () => CheckoutScreen()),
+                 GetPage(name: AppRoutes.notifications, page: () => NotificationsScreen()),
+         
         
   
   

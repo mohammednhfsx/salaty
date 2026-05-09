@@ -77,6 +77,7 @@ class Search extends SearchDelegate {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.05),
               blurRadius: 5,
             ),

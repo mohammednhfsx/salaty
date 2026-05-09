@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
 import 'package:salaty/controller/order_controller.dart';
-import 'package:salaty/controller/profiles_controller.dart';
+import 'package:salaty/controller/profile_controller.dart';
 import 'package:salaty/core/constant/route.dart';
 import 'package:salaty/core/localization/local_change.dart';
 import 'package:salaty/core/services/location_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileOptions extends StatelessWidget {
   const ProfileOptions({super.key});
 
   @override
   Widget build(BuildContext context) {
-   
+
+
     return Container(
       margin: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
+          // ignore: deprecated_member_use
           BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 10),
         ],
       ),
@@ -69,19 +72,19 @@ class ProfileOptions extends StatelessWidget {
             subtitle: "Manage your delivery addresses",
             onTap: () => _showAddresses(context),
           ),
-           buildItem(
+          buildItem(
             icon: Icons.language,
             title: "language",
             subtitle: "Ghange language",
-            onTap: () =>_showLanguageSheet(context), 
+            onTap: () => _showLanguageSheet(context),
           ),
-              buildItem(color: Colors.red,
+          buildItem(
+            color: Colors.red,
             icon: Icons.logout_rounded,
             title: "Logout ",
             subtitle: "signout of account",
             onTap: () => _showLogoutDialog(context),
           ),
-           
         ],
       ),
     );
@@ -93,14 +96,15 @@ class ProfileOptions extends StatelessWidget {
     required String subtitle,
     required Function() onTap,
     bool isLast = false,
-    Color? color 
-
-  }) { final itemColor = color ?? Colors.green;
+    Color? color,
+  }) {
+    final itemColor = color ?? const Color(0xFF0097A5);
     return Column(
       children: [
         ListTile(
           leading: CircleAvatar(
             radius: 22,
+            // ignore: deprecated_member_use
             backgroundColor: itemColor.withOpacity(0.1),
             child: Icon(icon, color: itemColor),
           ),
@@ -230,7 +234,7 @@ void _showEditProfile(BuildContext context) {
                 child: profileCtrl.isLoading.value
                     ? const CircularProgressIndicator(color: Colors.white)
                     : const Text(
-                    "Save changes",
+                        "Save changes",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
               ),
@@ -284,10 +288,12 @@ void _showNotificationSettings(BuildContext context) {
             () => SwitchListTile(
               activeThumbColor: Colors.teal,
               title: const Text(
-               "Order Updates",
+                "Order Updates",
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
-              subtitle: const Text("Receive notifications when your order status changes"),
+              subtitle: const Text(
+                "Receive notifications when your order status changes",
+              ),
               value: orderUpdates.value,
               onChanged: (val) => orderUpdates.value = val,
             ),
@@ -340,6 +346,19 @@ void _showNotificationSettings(BuildContext context) {
     ),
   );
 }
+// chat in whatsApp
+
+Future<void> _openWhatsApp({String? orderNumber}) async {
+  const String _whatsappNumber = "9647700296794";
+  String message = "مرحباً 👋\nأحتاج مساعدة";
+  if (orderNumber != null) {
+  }
+  final url = Uri.parse(
+    "https://wa.me/$_whatsappNumber?text=${Uri.encodeComponent(message)}",
+  );
+  // افتح رابط الواتساب باستخدام تطبيق الواتساب الحقيقي وانتظر لحد ما العملية تكتمل.
+  await launchUrl(url, mode: LaunchMode.externalApplication);
+}
 
 // ════════════════════════════════════════════
 // ✅ Help & Support
@@ -370,76 +389,87 @@ void _showHelpSupport(BuildContext context) {
           ),
           const SizedBox(height: 20),
           const Text(
-           "Assistance and support",
+            "Assistance and support",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
 
-          _helpItem(Icons.phone_outlined, "Contact us", "07700000000", () {
-         
-          }),
+          _helpItem(Icons.phone_outlined, "Contact us", "07700296794", () {}),
           _helpItem(
             Icons.email_outlined,
-           "e-mail",
-            "support@salaty.com",() {
-              
-            },
+            "e-mail",
+            "support@salaty.com",
+            () {},
           ),
-          _helpItem(Icons.chat_bubble_outline, "WhatsApp", "Contact via WhatsApp", () {
-               showModalBottomSheet(  context: context,
-    backgroundColor: Colors.white,
-    isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (context) => Padding(
-      padding: const EdgeInsets.all(20),   child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          
-          Center(
-            child: Container(
-              width: double.infinity,
-              height: 80,
-              decoration: BoxDecoration(
-               
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child:   InkWell(
-              onTap: () {
-                
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 18),
-                child: Container(
-                  height:  20, 
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.teal,
-                  ),
-                  alignment: AlignmentGeometry.center,
-                  child: Text(
-                    "WhatsApp",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+          _helpItem(
+            Icons.chat_bubble_outline,
+            "WhatsApp",
+            "Contact via WhatsApp",
+            () {
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.white,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                builder: (context) => Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: double.infinity,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Get.back();
+                              _openWhatsApp();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 15,
+                              ),
+                              child: Container(
+                                height: 10,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                  color: Colors.teal,
+                                ),
+                                alignment: AlignmentGeometry.center,
+                                child: Text(
+                                  "Contact support via  WhatsApp",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ) ,
-            ),
-          ),])));
-          }),
+              );
+            },
+          ),
           _helpItem(
             Icons.quiz_outlined,
             "Frequently asked questions",
-          "Check out the frequently asked questions.",() {
-            
-          },
+            "Check out the frequently asked questions.",
+            () {},
           ),
 
           const SizedBox(height: 16),
@@ -457,7 +487,8 @@ Widget _helpItem(
 ) {
   return ListTile(
     leading: CircleAvatar(
-      backgroundColor: Colors.teal.withOpacity(0.1),
+      // ignore: deprecated_member_use
+      backgroundColor: const Color(0xFF0097A5).withOpacity(0.1),
       child: Icon(icon, color: Colors.teal, size: 20),
     ),
     title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
@@ -471,9 +502,7 @@ Widget _helpItem(
 // ✅ Privacy Policy
 // ════════════════════════════════════════════
 Future<void> _showPrivacyPolicy(BuildContext context) async {
- 
-
-   showModalBottomSheet(
+  showModalBottomSheet(
     context: context,
     backgroundColor: Colors.white,
     isScrollControlled: true,
@@ -488,9 +517,9 @@ Future<void> _showPrivacyPolicy(BuildContext context) async {
       expand: false,
       builder: (context, scrollController) => SingleChildScrollView(
         controller: scrollController,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
             Center(
@@ -505,28 +534,28 @@ Future<void> _showPrivacyPolicy(BuildContext context) async {
             ),
             const SizedBox(height: 20),
             Text(
-            "privacy policy",
+              "privacy policy",
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
 
-           _policySection(
-  "Data Collection",
-  "We collect the information you provide directly, such as your name, email address, phone number, and address when creating an account or placing an order.",
-),
-_policySection(
-  "Data Usage",
-  "We use your data to process orders, send order updates, and improve our services. We do not sell your data to third parties.",
-),
-_policySection(
-  "Data Protection",
-  "We use Firebase by Google to securely store data. All data is encrypted and protected using modern security standards.",
-),
-_policySection(
-  "Your Rights",
-  "You have the right to request access to, update, or delete your data at any time by contacting us.",
-),
+            _policySection(
+              "Data Collection",
+              "We collect the information you provide directly, such as your name, email address, phone number, and address when creating an account or placing an order.",
+            ),
+            _policySection(
+              "Data Usage",
+              "We use your data to process orders, send order updates, and improve our services. We do not sell your data to third parties.",
+            ),
+            _policySection(
+              "Data Protection",
+              "We use Firebase by Google to securely store data. All data is encrypted and protected using modern security standards.",
+            ),
+            _policySection(
+              "Your Rights",
+              "You have the right to request access to, update, or delete your data at any time by contacting us.",
+            ),
             const SizedBox(height: 20),
           ],
         ),
@@ -544,10 +573,7 @@ Widget _policySection(String title, String content) {
         Text(
           title,
           textAlign: TextAlign.start, // ✅ يخدم عربي + إنكليزي
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Text(
@@ -666,6 +692,7 @@ void _showAddresses(BuildContext context) {
                     ),
                     child: ListTile(
                       leading: CircleAvatar(
+                        // ignore: deprecated_member_use
                         backgroundColor: Colors.teal.withOpacity(0.1),
                         child: const Icon(
                           Icons.location_on,
@@ -768,7 +795,7 @@ void _showAddAddressDialog(BuildContext context) {
           const SizedBox(height: 10),
           _addressField(
             phoneCtrl,
-           "phone number",
+            "phone number",
             Icons.phone_outlined,
             type: TextInputType.phone,
           ),
@@ -838,7 +865,7 @@ void _showAddAddressDialog(BuildContext context) {
                     cityCtrl.text.isEmpty ||
                     addressCtrl.text.isEmpty ||
                     phoneCtrl.text.isEmpty) {
-                  Get.snackbar( "Error", "Please fill in all fields");
+                  Get.snackbar("Error", "Please fill in all fields");
                   return;
                 }
                 Get.back(); // أغلق هذا الـ sheet
@@ -850,7 +877,7 @@ void _showAddAddressDialog(BuildContext context) {
                 );
               },
               child: const Text(
-               "Save address",
+                "Save address",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
@@ -886,6 +913,7 @@ Widget _addressField(
     ),
   );
 }
+
 void _showLogoutDialog(BuildContext context) {
   showDialog(
     context: context,
@@ -969,8 +997,8 @@ void _showLogoutDialog(BuildContext context) {
       );
     },
   );
-  
 }
+
 void _showLanguageSheet(BuildContext context) {
   final controller = Get.find<LocaleController>();
 
@@ -1008,6 +1036,7 @@ void _showLanguageSheet(BuildContext context) {
     ),
   );
 }
+
 class _LangOption extends StatelessWidget {
   final String value;
   final String selected;
@@ -1035,6 +1064,7 @@ class _LangOption extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
+          // ignore: deprecated_member_use
           color: isSelected ? color.withOpacity(0.06) : Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
@@ -1065,16 +1095,12 @@ class _LangOption extends StatelessWidget {
               ),
             ),
             Icon(
-              isSelected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_off,
+              isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
               color: isSelected ? color : Colors.grey,
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-

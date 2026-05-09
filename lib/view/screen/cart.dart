@@ -82,6 +82,7 @@ class Cart extends StatelessWidget {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         boxShadow: [
+                          // ignore: deprecated_member_use
                           BoxShadow(color: Colors.grey.withOpacity(0.3), blurRadius: 4),
                         ],
                         color: Colors.white,
@@ -122,7 +123,7 @@ class Cart extends StatelessWidget {
                                 Text(
                                   "${item.price} د.ع",
                                   style: TextStyle(
-                                      color:  Colors.teal,
+                                      color:  const Color(0xFF0097A5),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ),
@@ -133,7 +134,8 @@ class Cart extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 16,
-                                      backgroundColor:  Colors.teal.shade100,
+                                      // ignore: deprecated_member_use
+                                      backgroundColor: const Color(0xFF0097A5).withOpacity(0.4),
                                       child: IconButton(
                                         padding: EdgeInsets.zero,
                                         onPressed: () =>
@@ -149,7 +151,8 @@ class Cart extends StatelessWidget {
                                     ),
                                     CircleAvatar(
                                       radius: 16,
-                                      backgroundColor:  Colors.teal.shade100,
+                                      // ignore: deprecated_member_use
+                                      backgroundColor:  const Color(0xFF0097A5).withOpacity(0.4),
                                       child: IconButton(
                                         padding: EdgeInsets.zero,
                                         onPressed: () =>
@@ -211,7 +214,7 @@ class Cart extends StatelessWidget {
                               : () { Get.toNamed(AppRoutes.checkoutScreen);},
                               //  orderController.placeOrder(cartController),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal,
+                            backgroundColor: const Color(0xFF0097A5),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -251,7 +254,7 @@ class Cart extends StatelessWidget {
         Text(value,
             style: TextStyle(
                 fontSize: isTotal ? 18 : 14,
-                color: isTotal ?  Colors.teal : Colors.black,
+                color: isTotal ?  const Color(0xFF0097A5) : Colors.black,
                 fontWeight:
                     isTotal ? FontWeight.bold : FontWeight.normal)),
       ],

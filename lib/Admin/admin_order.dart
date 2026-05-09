@@ -129,6 +129,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen>
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
+                          // ignore: deprecated_member_use
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 6),
                     ],
@@ -212,7 +213,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen>
             final totalSales =
                 delivered.fold(0.0, (sum, o) => sum + o.total);
             final totalProfit =
-                delivered.fold(0.0, (sum, o) => sum + (o.platformFee ?? o.total * 0.01));
+                delivered.fold(0.0, (sum, o) => sum + o.platformFee);
             final totalOrders = orders.length;
             final deliveredCount = delivered.length;
             final pendingCount =
@@ -225,7 +226,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen>
                 now.difference(o.createdAt!).inDays <= 7).toList();
             final sales7 = last7.fold(0.0, (sum, o) => sum + o.total);
             final profit7 = last7.fold(
-                0.0, (sum, o) => sum + (o.platformFee ?? o.total * 0.01));
+                0.0, (sum, o) => sum + o.platformFee);
 
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -346,6 +347,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen>
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
+                                  // ignore: deprecated_member_use
                                   color: Colors.black.withOpacity(0.04),
                                   blurRadius: 4),
                             ],
@@ -384,7 +386,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen>
                                         fontSize: 13),
                                   ),
                                   Text(
-                                    "ربح: ${(o.platformFee ?? o.total * 0.01).toStringAsFixed(0)} د.ع",
+                                    "ربح: ${o.platformFee.toStringAsFixed(0)} د.ع",
                                     style: const TextStyle(
                                         color: Colors.teal, fontSize: 11),
                                   ),
@@ -437,6 +439,7 @@ class _StatCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
+          // ignore: deprecated_member_use
           BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 6),
         ],
       ),
@@ -446,6 +449,7 @@ class _StatCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 18,
+            // ignore: deprecated_member_use
             backgroundColor: color.withOpacity(0.1),
             child: Icon(icon, color: color, size: 18),
           ),
@@ -530,6 +534,7 @@ class _AdminOrderCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
+          // ignore: deprecated_member_use
           BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 8),
         ],
       ),
@@ -540,6 +545,7 @@ class _AdminOrderCard extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
+              // ignore: deprecated_member_use
               color: statusColor.withOpacity(0.08),
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
@@ -568,6 +574,7 @@ class _AdminOrderCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
+                    // ignore: deprecated_member_use
                     color: statusColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -603,9 +610,11 @@ class _AdminOrderCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
+                      // ignore: deprecated_member_use
                       color: Colors.teal.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                       border:
+                          // ignore: deprecated_member_use
                           Border.all(color: Colors.teal.withOpacity(0.3)),
                     ),
                     child: const Row(
@@ -696,7 +705,7 @@ class _AdminOrderCard extends StatelessWidget {
                 const Text("ربحك (1%)",
                     style: TextStyle(color: Colors.grey, fontSize: 12)),
                 Text(
-                  "${(order.platformFee ?? order.total * 0.01).toStringAsFixed(0)} د.ع",
+                  "${(order.platformFee).toStringAsFixed(0)} د.ع",
                   style: const TextStyle(
                       color: Colors.teal,
                       fontWeight: FontWeight.bold,
@@ -805,8 +814,10 @@ class _StatusButton extends StatelessWidget {
         padding:
             const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
+          // ignore: deprecated_member_use
           color: isActive ? color : color.withOpacity(0.08),
           borderRadius: BorderRadius.circular(20),
+          // ignore: deprecated_member_use
           border: Border.all(color: color.withOpacity(0.4)),
         ),
         child: Text(label,
@@ -841,9 +852,11 @@ class _FilterChip extends StatelessWidget {
         padding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
+          // ignore: deprecated_member_use
           color: isSelected ? color : color.withOpacity(0.08),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
+              // ignore: deprecated_member_use
               color: isSelected ? color : color.withOpacity(0.3)),
         ),
         child: Text(label,

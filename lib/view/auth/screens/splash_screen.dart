@@ -35,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image(
-          image: AssetImage("assets/images/WhatsApp Image 2026-04-28 at 9.13.17 PM.png"),
+        child: Image(height: 100,
+          image: AssetImage("assets/images/logo12.png"),
         ),
       ),
     );

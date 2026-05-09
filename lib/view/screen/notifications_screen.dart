@@ -59,15 +59,18 @@ class NotificationsScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 10),
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
+                  // ignore: deprecated_member_use
                   color: isRead ? Colors.white : Colors.teal.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isRead
                         ? Colors.grey.shade200
+                        // ignore: deprecated_member_use
                         : Colors.teal.withOpacity(0.3),
                   ),
                   boxShadow: [
                     BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.black.withOpacity(0.04), blurRadius: 4),
                   ],
                 ),
@@ -75,6 +78,7 @@ class NotificationsScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       backgroundColor:
+                           // ignore: deprecated_member_use
                            Colors.teal.withOpacity(0.1),
                       child: Icon(
                         Icons.notifications_outlined,

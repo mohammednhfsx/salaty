@@ -299,6 +299,7 @@ class CheckoutScreen extends StatelessWidget {
       color: Colors.white,
       borderRadius: BorderRadius.circular(14),
       boxShadow: [
+        // ignore: deprecated_member_use
         BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 6),
       ],
     ),
@@ -392,6 +393,7 @@ class _PaymentOption extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
+          // ignore: deprecated_member_use
           color: isSelected ? color.withOpacity(0.06) : Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
@@ -399,6 +401,7 @@ class _PaymentOption extends StatelessWidget {
             width: isSelected ? 2 : 1,
           ),
           boxShadow: [
+            // ignore: deprecated_member_use
             BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 4),
           ],
         ),
@@ -407,6 +410,7 @@ class _PaymentOption extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
+                // ignore: deprecated_member_use
                 color: color.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),

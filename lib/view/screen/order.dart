@@ -112,6 +112,7 @@ class _OrderCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
+          // ignore: deprecated_member_use
           BoxShadow(color: Colors.black.withOpacity(0.07), blurRadius: 8)
         ],
       ),
@@ -121,6 +122,7 @@ class _OrderCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
+              // ignore: deprecated_member_use
               color: statusColor.withOpacity(0.08),
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
@@ -137,6 +139,7 @@ class _OrderCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
+                    // ignore: deprecated_member_use
                     color: statusColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),

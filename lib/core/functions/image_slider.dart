@@ -71,7 +71,7 @@ class _ImageSliderState extends State<ImageSlider> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: currentindex == index
-                    ? Colors.teal
+                    ? const Color(0xFF0097A5)
                     : Colors.grey.shade300,
               ),
             );

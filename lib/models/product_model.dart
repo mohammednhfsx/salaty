@@ -3,7 +3,7 @@ class ProductModel {
   String name;
   String description;
   double price;
-  String image;
+  List<String> images;
    String category;
 
   ProductModel({
@@ -11,8 +11,9 @@ class ProductModel {
     required this.name,
     required this.description,
     required this.price,
-    required this.image, this.category = 'Other',
+    required this.images, this.category = 'Other',
   });
+   String get image => images.isNotEmpty ? images.first : '';
 
   //  تحويل من Firestore
   factory ProductModel.fromJson(Map<String, dynamic> json, String id) {
@@ -21,7 +22,9 @@ class ProductModel {
       name: json['name'],
       description: json['description'],
       price: (json['price'] as num).toDouble(),
-      image: json['image'],
+      images: json['images'] != null
+          ? List<String>.from(json['images'])
+          : [json['image'] ?? ''],
             category: json['category'] ?? 'Other',
     );
   }
@@ -32,7 +35,8 @@ class ProductModel {
       "name": name,
       "description": description,
       "price": price,
-      "image": image,
+      'images': images, 
+      'image': images.isNotEmpty ? images.first : '', //  للتوافق مع القد
        'category': category,
     };
   }

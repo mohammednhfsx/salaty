@@ -37,7 +37,8 @@ class HomeContent extends StatelessWidget {
         },
       ),
       body: SafeArea(
-        child: RefreshIndicator(color:  Colors.teal ,
+        child: RefreshIndicator(
+          color: Colors.teal,
           onRefresh: () async {
             await Get.find<ProductController>().getProducts();
           },
@@ -54,13 +55,13 @@ class HomeContent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            height: 100,
-                            child: Image.asset(
-                              "assets/images/WhatsApp Image 2026-04-28 at 9.13.17 PM.png",
-                            ),
+                            height: 60,
+                            child: Image.asset("assets/images/logo12.png"),
                           ),
                           InkWell(
-                            onTap: () {Get.toNamed(AppRoutes.notifications);},
+                            onTap: () {
+                              Get.toNamed(AppRoutes.notifications);
+                            },
                             child: Container(
                               height: 40,
                               width: 40,
@@ -72,7 +73,7 @@ class HomeContent extends StatelessWidget {
                               ),
                               child: Icon(
                                 Icons.notifications_none_outlined,
-                                color:   Colors.teal,
+                                color: Colors.teal,
                               ),
                             ),
                           ),
@@ -150,7 +151,7 @@ class HomeContent extends StatelessWidget {
                             mainAxisSpacing: 20,
                             childAspectRatio: 0.70,
                           ),
-                   itemCount: controller.filteredProducts.length,
+                      itemCount: controller.filteredProducts.length,
                       itemBuilder: (context, index) {
                         var product = controller.filteredProducts[index];
                         return InkWell(
@@ -232,6 +233,7 @@ class HomeContent extends StatelessWidget {
                                             height: 32,
                                             width: 32,
                                             decoration: BoxDecoration(
+                                              // ignore: deprecated_member_use
                                               color: Colors.black.withOpacity(
                                                 0.5,
                                               ),
@@ -332,7 +334,6 @@ class HomeContent extends StatelessWidget {
                                 const SizedBox(height: 4),
 
                                 //  الوصف كامل
-                               
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 8,
@@ -347,18 +348,19 @@ class HomeContent extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
+                                SizedBox(height: 15,),
 
                                 //  السعر
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
+                                    horizontal: 10,
                                   ),
                                   child: Text(
                                     "${product.price} د.ع",
                                     style: const TextStyle(
-                                      color: Colors.black,
+                                      color: Color(0xFF0097A5),
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 14,
+                                      fontSize: 17,
                                     ),
                                   ),
                                 ),

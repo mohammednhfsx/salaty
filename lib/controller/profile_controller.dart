@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
 import 'package:salaty/models/product_model.dart';
 
@@ -10,6 +11,7 @@ class ProfileController extends GetxController {
   var isLoading = false.obs;
   var products = <ProductModel>[].obs;
   var addresses = <Map <String ,dynamic>>[].obs;
+  var appVersion = ''.obs;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -20,7 +22,23 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     if (userid != null) getUserData();
+      _getAppVersion();
   }
+
+
+
+
+
+
+
+
+Future<void> _getAppVersion() async {
+  final info = await PackageInfo.fromPlatform();
+  appVersion.value = info.version;
+}
+
+
+
 
    // =================  إضافة عنوان =================
 

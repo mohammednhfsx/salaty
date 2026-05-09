@@ -11,22 +11,21 @@ class ProductController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   List<ProductModel> products = [];
-  File? imageFile;
+  List<File?> imageFiles = [null, null, null];
   bool isLoading = false;
-  bool isShimmmer=false;
-final List<String> categoryList = [
-  'Mobile', 'Home', 'Accessories', 'Pc', 'Laptop', 'Other'
-];
+  bool isShimmmer = false;
 
-String selectedCategory = 'All'; // افتراضي آمن
+  final List<String> categoryList = [
+    'Mobile',
+    'Home',
+    'Accessories',
+    'Pc',
+    'Laptop',
+    'Other',
+  ];
 
-void setCategory(String cat) {
-  selectedCategory = cat;
-  update();
-}
-  
+  String selectedCategory = 'All';
 
-  // ✅ حط الـ API Key تبعك هنا
   final String imgbbApiKey = "c8b8da5673b513d90e323aa002148077";
 
   @override
@@ -35,37 +34,38 @@ void setCategory(String cat) {
     super.onInit();
   }
 
+  // ================= Category =================
+  void setCategory(String cat) {
+    selectedCategory = cat;
+    update();
+  }
 
+  List<ProductModel> get filteredProducts {
+    if (selectedCategory == 'All') return products;
+    return products.where((p) => p.category == selectedCategory).toList();
+  }
 
-List<ProductModel> get filteredProducts {
-  if (selectedCategory == 'All') return products;
-  return products
-      .where((p) => p.category == selectedCategory)
-      .toList();
-}
+  void filterByCategory(String category) {
+    selectedCategory = category;
+    update();
+  }
 
-// ✅ دالة الفلترة
-void filterByCategory(String category) {
-  selectedCategory = category;
-  update();
-}
-  // ================= pick image =================
-  Future<void> pickImage() async {
+  // ================= Pick Image =================
+  Future<void> pickImage(int index) async {
     final picked = await ImagePicker().pickImage(
       source: ImageSource.gallery,
-      imageQuality: 70, // ✅ ضغط الصورة
+      imageQuality: 70,
     );
     if (picked != null) {
-      imageFile = File(picked.path);
+      imageFiles[index] = File(picked.path);
       update();
     }
   }
 
-  // ================= upload to ImgBB =================
+  // ================= Upload Single Image to ImgBB =================
   Future<String?> uploadImage(File file) async {
     try {
       String base64Image = base64Encode(await file.readAsBytes());
-
       var response = await http.post(
         Uri.parse("https://api.imgbb.com/1/upload"),
         body: {
@@ -73,10 +73,9 @@ void filterByCategory(String category) {
           "image": base64Image,
         },
       );
-
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
-        return jsonData['data']['url']; //  رابط الصورة
+        return jsonData['data']['url'];
       }
       return null;
     } catch (e) {
@@ -85,11 +84,23 @@ void filterByCategory(String category) {
     }
   }
 
+  // ================= Upload All Images =================
+  Future<List<String>> uploadImages() async {
+    List<String> urls = [];
+    for (var file in imageFiles) {
+      if (file != null) {
+        String? url = await uploadImage(file);
+        if (url != null) urls.add(url);
+      }
+    }
+    return urls;
+  }
+
   // ================= GET =================
   Future<void> getProducts() async {
     try {
       isLoading = true;
-      isShimmmer=true;
+      isShimmmer = true;
       update();
       var response = await firestore.collection("products").get();
       products = response.docs.map((e) {
@@ -99,7 +110,7 @@ void filterByCategory(String category) {
       Get.snackbar("خطأ", "فشل تحميل المنتجات: $e");
     } finally {
       isLoading = false;
-      isShimmmer=false;
+      isShimmmer = false;
       update();
     }
   }
@@ -109,20 +120,19 @@ void filterByCategory(String category) {
     required String name,
     required String desc,
     required double price,
-      required String category,
+    required String category,
   }) async {
-    if (imageFile == null) {
-      Get.snackbar("خطأ", "اختر صورة أولاً");
+    if (imageFiles.every((f) => f == null)) {
+      Get.snackbar("خطأ", "اختر صورة واحدة على الأقل");
       return;
     }
-
     try {
       isLoading = true;
       update();
 
-      String? imageUrl = await uploadImage(imageFile!);
-      if (imageUrl == null) {
-        Get.snackbar("خطأ", "فشل رفع الصورة");
+      List<String> imageUrls = await uploadImages();
+      if (imageUrls.isEmpty) {
+        Get.snackbar("خطأ", "فشل رفع الصور");
         return;
       }
 
@@ -130,11 +140,12 @@ void filterByCategory(String category) {
         "name": name,
         "description": desc,
         "price": price,
-        "image": imageUrl,
-          "category": category,
+        "category": category,
+        "images": imageUrls,
+        "image": imageUrls.first,
       });
 
-      imageFile = null;
+      imageFiles = [null, null, null];
       Get.snackbar("نجاح", "تم إضافة المنتج ✅");
       Get.back();
       getProducts();
@@ -152,35 +163,33 @@ void filterByCategory(String category) {
     required String name,
     required String desc,
     required double price,
-    required String oldImageUrl,
-     required String category,
+    required List<String> oldImages,
+    required String category,
   }) async {
     try {
       isLoading = true;
       update();
 
-      String imageUrl;
-
-      if (imageFile != null) {
-        String? newUrl = await uploadImage(imageFile!);
-        if (newUrl == null) {
-          Get.snackbar("خطأ", "فشل رفع الصورة");
-          return;
+      List<String> finalImages = [];
+      for (int i = 0; i < 3; i++) {
+        if (imageFiles[i] != null) {
+          String? url = await uploadImage(imageFiles[i]!);
+          if (url != null) finalImages.add(url);
+        } else if (i < oldImages.length) {
+          finalImages.add(oldImages[i]);
         }
-        imageUrl = newUrl;
-      } else {
-        imageUrl = oldImageUrl;
       }
 
       await firestore.collection("products").doc(id).update({
         "name": name,
         "description": desc,
         "price": price,
-        "image": imageUrl,
-          "category": category, 
+        "category": category,
+        "images": finalImages,
+        "image": finalImages.isNotEmpty ? finalImages.first : '',
       });
 
-      imageFile = null;
+      imageFiles = [null, null, null];
       Get.snackbar("نجاح", "تم تعديل المنتج ✅");
       Get.back();
       getProducts();

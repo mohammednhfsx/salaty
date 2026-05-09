@@ -33,7 +33,7 @@ class ListViewGategories extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 6),
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.teal : Colors.white,
+                  color: isSelected ? const Color(0xFF0097A5) : Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: isSelected ? Colors.teal : Colors.grey.shade300,

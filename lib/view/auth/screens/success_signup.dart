@@ -30,7 +30,7 @@ class SuccessSignup extends StatelessWidget {
               SizedBox(height: 30),
 
               Spacer(),
-              SizedBox(
+              SizedBox(  
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(

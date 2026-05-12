@@ -98,7 +98,7 @@ class ProductDetails extends StatelessWidget {
                             TextStyle(fontSize: 14, color: Colors.white)),
                   );
                 },
-                child: const Text("اضافة الى السلة",
+                child:  Text("Add_to_cart".tr,
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -119,7 +119,7 @@ class ProductDetails extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  color: Colors.grey[50],
+                  color: Colors.white,
                   child: SizedBox(
                     height: 320,
                     child: PageView.builder(
@@ -229,7 +229,7 @@ class ProductDetails extends StatelessWidget {
                   // ══════════════════════════════
                   // ✅ الوصف مع bullet points
                   // ══════════════════════════════
-                  const Text("الوصف",
+                   Text("Description".tr,
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
@@ -265,7 +265,7 @@ class ProductDetails extends StatelessWidget {
                   // ══════════════════════════════
                   // ✅ قسم الضمان
                   // ══════════════════════════════
-                  const Text("الضمان",
+                   Text("Warranty".tr,
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
@@ -286,7 +286,7 @@ class ProductDetails extends StatelessWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            "12 شهر ضمان يبدأ من تاريخ الشراء علماً ان الضمان لا يشمل سوء الاستخدام",
+                           "text_warranty".tr,
                             style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.grey[700],
@@ -305,9 +305,9 @@ class ProductDetails extends StatelessWidget {
             // ══════════════════════════════
             if (similarProducts.isNotEmpty) ...[
               const Divider(thickness: 8, color: Color(0xFFF3F7F8)),
-              const Padding(
+               Padding(
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: Text("منتجات مشابهة",
+                child: Text("Similar_products".tr,
                     style: TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold)),
               ),

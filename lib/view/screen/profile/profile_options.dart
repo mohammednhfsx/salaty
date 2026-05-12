@@ -30,15 +30,15 @@ class ProfileOptions extends StatelessWidget {
           // ✅ Edit Profile — يفتح bottom sheet لتعديل الاسم
           buildItem(
             icon: Icons.person_outline,
-            title: "Edit Profile",
-            subtitle: "Update your personal information",
+            title:    "Edit_Profile".tr,
+            subtitle:   "Update_your_personal_information".tr,
             onTap: () => _showEditProfile(context),
           ),
           // ✅ Order History — يروح لصفحة الطلبات
           buildItem(
             icon: Icons.inventory_2_outlined,
-            title: "Order History",
-            subtitle: "View all your past orders",
+            title:  "Order_History".tr,
+            subtitle:  "View_all_your_past_orders".tr,
             onTap: () {
               Get.find<OrderController>().getMyOrders();
               Get.toNamed(AppRoutes.orders);
@@ -47,42 +47,43 @@ class ProfileOptions extends StatelessWidget {
           // ✅ Notifications — يفتح إعدادات الإشعارات
           buildItem(
             icon: Icons.notifications_none,
-            title: "Notifications",
-            subtitle: "Manage notification preferences",
+            title: "Notifications".tr,
+            subtitle:     "Manage_notification_preferences".tr,
             onTap: () => _showNotificationSettings(context),
           ),
           // ✅ Help & Support
           buildItem(
             icon: Icons.help_outline,
-            title: "Help & Support",
-            subtitle: "Get help with your orders",
+            title:    "Help_Support".tr,
+            subtitle: "Get_help_with_your_orders".tr,
             onTap: () => _showHelpSupport(context),
           ),
           // ✅ Privacy Policy
           buildItem(
             icon: Icons.privacy_tip_outlined,
-            title: "Privacy Policy",
-            subtitle: "View our privacy policy",
-            isLast: true,
+            title:    "Privacy_Policy".tr,
+            subtitle:    "View_our_privacy_policy".tr,
+           
             onTap: () => _showPrivacyPolicy(context),
           ),
           buildItem(
             icon: Icons.location_on_outlined,
-            title: "My Addresses",
-            subtitle: "Manage your delivery addresses",
+            title:  "My_Addresses".tr,
+            subtitle:   "Manage_your_delivery_addresses".tr,
             onTap: () => _showAddresses(context),
           ),
           buildItem(
             icon: Icons.language,
-            title: "language",
-            subtitle: "Ghange language",
+            title: "language".tr,
+            subtitle: "Ghange_language".tr,
             onTap: () => _showLanguageSheet(context),
           ),
           buildItem(
+             isLast: true,
             color: Colors.red,
             icon: Icons.logout_rounded,
-            title: "Logout ",
-            subtitle: "signout of account",
+            title: "Logout".tr,
+            subtitle:   "signout_of_account".tr,
             onTap: () => _showLogoutDialog(context),
           ),
         ],
@@ -110,10 +111,10 @@ class ProfileOptions extends StatelessWidget {
           ),
           title: Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.w500),
+            style: const TextStyle(fontFamily: 'Almarai-Regular',color: Colors.black,fontWeight: FontWeight.w500),
           ),
           subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
-          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16,color: Colors.grey,),
           onTap: onTap,
         ),
         if (!isLast) const Divider(height: 2, thickness: 0.5, indent: 70),
@@ -498,6 +499,7 @@ Widget _helpItem(
   );
 }
 
+
 // ════════════════════════════════════════════
 // ✅ Privacy Policy
 // ════════════════════════════════════════════
@@ -557,6 +559,7 @@ Future<void> _showPrivacyPolicy(BuildContext context) async {
               "You have the right to request access to, update, or delete your data at any time by contacting us.",
             ),
             const SizedBox(height: 20),
+           
           ],
         ),
       ),

@@ -18,7 +18,7 @@ class Cart extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text("Shopping Cart"),
+        title:  Text("Shopping_Cart".tr),
         actions: [
           // ✅ عدد العناصر في الـ AppBar
           Obx(() => Padding(
@@ -48,8 +48,8 @@ class Cart extends StatelessWidget {
                    SizedBox(height: 300,
                     child: Lottie.asset("assets/lottile/empty.json")),
                       const SizedBox(height: 16),
-                      const Text(
-                        "There's nothing in the basket",
+                       Text(
+                    "There's_nothing_in_the_basket".tr,
 
                         style: TextStyle(
                             fontSize: 24,
@@ -57,7 +57,7 @@ class Cart extends StatelessWidget {
                             color: Color.fromARGB(255, 12, 9, 9)),
                       ),
                        Text(
-                 "Browse the store and add your products\n to your cart list for easy access at any time.",
+                 "Browse_the_store_and_add_your_products".tr,
                     textAlign: TextAlign.center,
 
                         style: TextStyle(
@@ -192,13 +192,13 @@ class Cart extends StatelessWidget {
               if (cartController.cartItems.isEmpty) return const SizedBox();
               return Column(
                 children: [
-                  _buildRow("Subtotal",
+                  _buildRow("Subtotal".tr,
                       "${cartController.total.toStringAsFixed(2)} د.ع"),
                   // _buildRow("Shipping",
                   //     "${cartController.shoping.toStringAsFixed(2)} د.ع"),
                   const Divider(),
                   _buildRow(
-                      "Total",
+                      "Total".tr,
                       "${cartController.finaltotal.toStringAsFixed(2)} د.ع",
                       isTotal: true),
                   const SizedBox(height: 15),
@@ -226,8 +226,8 @@ class Cart extends StatelessWidget {
                                   child: CircularProgressIndicator(
                                       color: Colors.white, strokeWidth: 2),
                                 )
-                              : const Text(
-                                  "Proceed to Checkout",
+                              :  Text(
+                                "Proceed_to_Checkout".tr,
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),

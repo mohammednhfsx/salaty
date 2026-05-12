@@ -46,12 +46,13 @@ class ListViewGategories extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      cat['name']!,
+                      cat['name']!.tr,
                       style: TextStyle(
                         color: isSelected ? Colors.white : Colors.black87,
                         fontWeight: isSelected
                             ? FontWeight.bold
                             : FontWeight.normal,
+                            fontFamily: "Almarai-Regular"
                       ),
                     ),
                   ],

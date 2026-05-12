@@ -23,8 +23,8 @@ class CheckoutScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F7F8),
       appBar: AppBar(
-        title: const Text(
-          "إتمام الطلب",
+        title: Text(
+          "Order_completed".tr,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -41,38 +41,38 @@ class CheckoutScreen extends StatelessWidget {
               // ══════════════════════════
               // بيانات التوصيل
               // ══════════════════════════
-              _sectionTitle("📦 بيانات التوصيل"),
+              _sectionTitle("Delivery_data".tr),
               const SizedBox(height: 12),
               _buildCard(
                 child: Column(
                   children: [
                     _field(
                       controller: nameCtrl,
-                      label: "الاسم الكامل",
+                      label: "full_name".tr,
                       icon: Icons.person_outline,
-                      validator: (v) => v!.isEmpty ? "مطلوب" : null,
+                      validator: (v) => v!.isEmpty ? "required".tr : null,
                     ),
                     const SizedBox(height: 12),
                     _field(
                       controller: phoneCtrl,
-                      label: "رقم الهاتف",
+                      label: "phone_number".tr,
                       icon: Icons.phone_outlined,
                       type: TextInputType.phone,
-                      validator: (v) => v!.isEmpty ? "مطلوب" : null,
+                      validator: (v) => v!.isEmpty ? "required".tr : null,
                     ),
                     const SizedBox(height: 12),
                     _field(
                       controller: cityCtrl,
-                      label: "المدينة",
+                      label: "city".tr,
                       icon: Icons.location_city_outlined,
-                      validator: (v) => v!.isEmpty ? "مطلوب" : null,
+                      validator: (v) => v!.isEmpty ? "required".tr : null,
                     ),
                     const SizedBox(height: 12),
                     _field(
                       controller: addressCtrl,
-                      label: "العنوان التفصيلي",
+                      label: "Detailed_address".tr,
                       icon: Icons.home_outlined,
-                      validator: (v) => v!.isEmpty ? "مطلوب" : null,
+                      validator: (v) => v!.isEmpty ? "required".tr : null,
                     ),
                   ],
                 ),
@@ -83,7 +83,7 @@ class CheckoutScreen extends StatelessWidget {
               // ══════════════════════════
               // طريقة الدفع
               // ══════════════════════════
-              _sectionTitle("💳 طريقة الدفع"),
+              _sectionTitle("payment_method".tr),
               const SizedBox(height: 12),
 
               Obx(
@@ -94,35 +94,23 @@ class CheckoutScreen extends StatelessWidget {
                       value: 'cash',
                       selected: selectedPayment.value,
                       icon: Icons.payments_outlined,
-                      title: "الدفع عند الاستلام",
-                      subtitle: "ادفع كاش عند وصول طلبك",
+                      title: "Cash_on_delivery".tr,
+                      subtitle: "Pay_cash_upon_delivery_of_your_order".tr,
                       color: Colors.green,
                       onTap: () => selectedPayment.value = 'cash',
                     ),
                     const SizedBox(height: 10),
                     // دفع إلكتروني
-                    // _PaymentOption(
-                    //   value: 'online',
-                    //   selected: selectedPayment.value,
-                    //   icon: Icons.credit_card_outlined,
-                    //   title: "الدفع الإلكتروني",
-                    //   subtitle: "ادفع الآن عبر بطاقة الائتمان",
-                    //   color: Colors.blue,
-                    //   onTap: () => selectedPayment.value = 'online',
-                    // ),
                     _PaymentOption(
                       value: 'online',
                       selected: selectedPayment.value,
                       icon: Icons.credit_card_outlined,
-                      title: "الدفع الإلكتروني",
-                      subtitle: "قريباً — غير متاح حالياً",
-                      color: Colors.grey,
-                      onTap: () => Get.snackbar(
-                        "قريباً 🔜",
-                        "خدمة الدفع الإلكتروني ستكون متاحة قريباً",
-                        backgroundColor: Colors.grey[800],
-                        colorText: Colors.white,
-                      ),
+                      title: "Electronic_payment".tr,
+                      subtitle: "Pay_now_by_credit_card".tr,
+                      color: Colors.blue,
+                    
+                      onTap: () => selectedPayment.value = 'online',
+                
                     ),
                   ],
                 ),
@@ -135,8 +123,8 @@ class CheckoutScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "بيانات البطاقة",
+                            Text(
+                              "Card_details".tr,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
@@ -145,11 +133,11 @@ class CheckoutScreen extends StatelessWidget {
                             const SizedBox(height: 12),
                             _field(
                               controller: TextEditingController(),
-                              label: "رقم البطاقة",
+                              label: "Card_number".tr,
                               icon: Icons.credit_card,
                               type: TextInputType.number,
                               validator: (v) => v!.length < 16
-                                  ? "رقم البطاقة غير صحيح"
+                                  ? "Invalid_card_number".tr
                                   : null,
                             ),
                             const SizedBox(height: 12),
@@ -162,7 +150,7 @@ class CheckoutScreen extends StatelessWidget {
                                     icon: Icons.date_range_outlined,
                                     type: TextInputType.number,
                                     validator: (v) =>
-                                        v!.isEmpty ? "مطلوب" : null,
+                                        v!.isEmpty ? "required".tr : null,
                                   ),
                                 ),
                                 const SizedBox(width: 12),
@@ -173,7 +161,7 @@ class CheckoutScreen extends StatelessWidget {
                                     icon: Icons.lock_outline,
                                     type: TextInputType.number,
                                     validator: (v) =>
-                                        v!.length < 3 ? "غير صحيح" : null,
+                                        v!.length < 3 ? "incorrect".tr : null,
                                   ),
                                 ),
                               ],
@@ -189,30 +177,30 @@ class CheckoutScreen extends StatelessWidget {
               // ══════════════════════════
               // ملخص الطلب
               // ══════════════════════════
-              _sectionTitle("🧾 ملخص الطلب"),
+              _sectionTitle("Order_Summary".tr),
               const SizedBox(height: 12),
               _buildCard(
                 child: Obx(
                   () => Column(
                     children: [
                       _summaryRow(
-                        "المنتجات",
+                        "Subtotal".tr,
                         "${cart.total.toStringAsFixed(0)} د.ع",
                       ),
-                      const Divider(height: 16),
+
                       // _summaryRow(
                       //   "التوصيل",
                       //   "${cart.shoping.toStringAsFixed(0)} د.ع",
                       // ),
                       const Divider(height: 16),
                       _summaryRow(
-                        "رسوم الخدمة (1%)",
+                        "Service_fee".tr,
                         "${(cart.finaltotal * 0.01).toStringAsFixed(0)} د.ع",
                         color: Colors.orange,
                       ),
                       const Divider(height: 16),
                       _summaryRow(
-                        "المجموع الكلي",
+                        "Total".tr,
                         "${cart.finaltotal.toStringAsFixed(0)} د.ع",
                         isBold: true,
                         color: Colors.teal,
@@ -246,8 +234,8 @@ class CheckoutScreen extends StatelessWidget {
                             // ✅ لو دفع إلكتروني — رسالة مؤقتة
                             if (selectedPayment.value == 'online') {
                               Get.snackbar(
-                                "⏳ جاري المعالجة",
-                                "يتم معالجة الدفع...",
+                                "Processing_in_progress".tr,
+                                "Payment_is_being_processed".tr,
                                 backgroundColor: Colors.blue,
                                 colorText: Colors.white,
                               );
@@ -267,8 +255,8 @@ class CheckoutScreen extends StatelessWidget {
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
                             selectedPayment.value == 'cash'
-                                ? "✅ تأكيد الطلب"
-                                : "💳 ادفع الآن",
+                                ? "Confirm_order".tr
+                                : "Pay_now".tr,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

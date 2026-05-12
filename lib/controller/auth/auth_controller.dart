@@ -46,6 +46,7 @@ void onInit() {
     await getUserData();
      NotificationService().saveToken();
     update();
+    
     return true;
   } catch (e) {
     Get.snackbar("Error", e.toString());

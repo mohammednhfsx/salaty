@@ -43,6 +43,7 @@ List<GetPage<dynamic>>? routes = [
         GetPage(name: AppRoutes.adminOrdersScreen, page: () => AdminOrdersScreen()),
          GetPage(name: AppRoutes.checkoutScreen, page: () => CheckoutScreen()),
                  GetPage(name: AppRoutes.notifications, page: () => NotificationsScreen()),
+                 
          
         
   

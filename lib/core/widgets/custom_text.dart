@@ -16,7 +16,7 @@ class CustomText extends StatelessWidget {
       text,
   
 
-      style: TextStyle(fontSize: fontSize, fontWeight: fontWeight,color:color, ),
+      style: TextStyle(fontSize: fontSize, fontWeight: fontWeight,color:color,fontFamily: "Almarai-Regular" ),
     );
   }
 }

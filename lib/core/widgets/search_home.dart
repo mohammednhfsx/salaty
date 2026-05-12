@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:salaty/view/screen/search.dart';
 
 class SearchHome extends StatelessWidget {
@@ -26,7 +27,7 @@ class SearchHome extends StatelessWidget {
         children: [
           Icon(Icons.search,color:  Colors.grey,),
           SizedBox(width: 10),
-          Text("Search products...",style: TextStyle(color: Colors.grey),),
+          Text("search".tr,style: TextStyle(color: Colors.grey,fontSize: 17),),
         ],
       ),
     ),

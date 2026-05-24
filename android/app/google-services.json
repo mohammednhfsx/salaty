@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "751020501218",
+    "project_id": "salaty-7d4a5",
+    "storage_bucket": "salaty-7d4a5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751020501218:android:7e1fe3b8e80d8466a6d6bb",
+        "android_client_info": {
+          "package_name": "com.example.salaty"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwWBwjmDZolsNdtBMMkDPiYUc8dytPNss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

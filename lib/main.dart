@@ -1,6 +1,5 @@
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/auth/auth_controller.dart';
@@ -9,27 +8,28 @@ import 'package:salaty/controller/home/product_controller.dart';
 import 'package:salaty/controller/notification_controller.dart';
 import 'package:salaty/controller/order_controller.dart';
 import 'package:salaty/core/localization/local_change.dart';
-import 'package:salaty/core/services/notification_service.dart';
 import 'package:salaty/route.dart';
 import 'package:salaty/core/localization/lang/translation.dart';
 import 'package:salaty/core/services/services.dart';
-
+import 'firebase_options.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 1: Firebase أولاً
-  await Firebase.initializeApp();
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
 
   // 2: Background Handler
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   // 3: Services
   await initialServices();
 
   // 4: الإشعارات
-await NotificationService().initialize();
+// await NotificationService().initialize();
 
   // 5: Controllers
   Get.put(AuthController(), permanent: true);

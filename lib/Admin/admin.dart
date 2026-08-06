@@ -4,7 +4,7 @@ import 'package:salaty/controller/home/product_controller.dart';
 import 'package:salaty/core/constant/route.dart';
 import 'package:salaty/models/product_model.dart';
 
-class AddProductPage extends StatelessWidget {
+class Admin extends StatelessWidget {
   final controller = Get.find<ProductController>();
 
   final nameController = TextEditingController();
@@ -13,7 +13,7 @@ class AddProductPage extends StatelessWidget {
 
   final ProductModel? product;
 
-  AddProductPage({super.key, this.product}) {
+  Admin({super.key, this.product}) {
     if (product != null) {
       nameController.text = product!.name;
       priceController.text = product!.price.toString();
@@ -39,193 +39,320 @@ class AddProductPage extends StatelessWidget {
   final Color bgColor = const Color(0xFFF8F9FA); 
   final Color cardColor = Colors.white;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: bgColor,
-      appBar: AppBar(
-        title: Text(
-          isEdit ? "تعديل المنتج" : "لوحة الإدارة",
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black87),
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: bgColor,
+    appBar: AppBar(
+      title: Text(
+        isEdit ? "تعديل المنتج" : " ادارة المنتجات",
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black87),
       ),
-      body: GetBuilder<ProductController>(
-        builder: (c) {
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // ── زر إدارة الطلبات بتصميم بانر ──
-                if (!isEdit) ...[
-                  _buildAdminHeader(),
-                  const SizedBox(height: 24),
-                ],
+      centerTitle: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      iconTheme: const IconThemeData(color: Colors.black87),
+    ),
+    body: GetBuilder<ProductController>(
+      builder: (c) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final double screenWidth = constraints.maxWidth;
 
-                // ── كارت بيانات المنتج ──
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: cardColor,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        // ignore: deprecated_member_use
-                        color: Colors.black.withOpacity(0.03),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      )
-                    ],
+            final bool isMobile = screenWidth < 600;
+            final bool isTablet =
+                screenWidth >= 600 && screenWidth < 1000;
+            final bool isDesktop = screenWidth >= 1000;
+
+            final double horizontalPadding = isMobile
+                ? 16
+                : isTablet
+                    ? 32
+                    : 48;
+
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: 16,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  // يمنع تمدد المحتوى بشكل مبالغ على الويب
+                  constraints: const BoxConstraints(
+                    maxWidth: 1200,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(Icons.info_outline, color: primaryColor, size: 22),
-                          const SizedBox(width: 8),
-                          const Text(
-                            "التفاصيل الأساسية",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF264653),
+                      if (!isEdit) ...[
+                        _buildAdminHeader(),
+                        const SizedBox(height: 24),
+                      ],
+
+                      // لابتوب وويب
+                      if (isDesktop)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: _buildDetailsCard(
+                                c,
+                                useTwoColumns: true,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              flex: 4,
+                              child: _buildImagesCard(
+                                c,
+                                crossAxisCount: 3,
+                              ),
+                            ),
+                          ],
+                        )
+                      // موبايل وتابلت
+                      else
+                        Column(
+                          children: [
+                            _buildDetailsCard(
+                              c,
+                              useTwoColumns: isTablet,
+                            ),
+                            const SizedBox(height: 24),
+                            _buildImagesCard(
+                              c,
+                              crossAxisCount: screenWidth < 400 ? 2 : 3,
+                            ),
+                          ],
+                        ),
 
-                      _buildTextField(
-                        controller: nameController,
-                        label: "اسم المنتج",
-                        icon: Icons.shopping_bag_outlined,
-                      ),
-                      const SizedBox(height: 16),
-                      
-                      _buildTextField(
-                        controller: priceController,
-                        label: "السعر",
-                        icon: Icons.attach_money_rounded,
-                        isNumber: true,
-                      ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 32),
 
-                      _buildTextField(
-                        controller: descController,
-                        label: "الوصف",
-                        icon: Icons.description_outlined,
-                        maxLines: 3,
+                      // زر الحفظ
+                      Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: isMobile ? double.infinity : 420,
+                          child: _buildSaveButton(c),
+                        ),
                       ),
-                      const SizedBox(height: 16),
 
-                      _buildDropdown(c),
+                      const SizedBox(height: 30),
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 24),
-
-                // ── كارت صور المنتج ──
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: cardColor,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        // ignore: deprecated_member_use
-                        color: Colors.black.withOpacity(0.03),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.image_outlined, color: primaryColor, size: 22),
-                              const SizedBox(width: 8),
-                              const Text(
-                                "صور المنتج",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF264653),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                            decoration: BoxDecoration(
-                              // ignore: deprecated_member_use
-                              color: primaryColor.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              "حتى 3 صور",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: primaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        "الصورة الأولى ستكون هي الرئيسية، انقر للإضافة",
-                        style: TextStyle(fontSize: 13, color: Colors.grey),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: List.generate(3, (index) {
-                          final file = c.imageFiles[index];
-                          final oldUrl = isEdit && index < product!.images.length
-                              ? product!.images[index]
-                              : null;
-
-                          Widget picker = _buildImagePicker(c, index, file, oldUrl);
-                          
-                          if (index < 2) {
-                            return Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.only(end: 12.0),
-                                child: picker,
-                              ),
-                            );
-                          }
-                          return Expanded(child: picker);
-                        }),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 32),
-
-                // ── زر الحفظ ──
-                _buildSaveButton(c),
-                const SizedBox(height: 30),
-              ],
+              ),
+            );
+          },
+        );
+      },
+    ),
+  );
+}
+Widget _buildDetailsCard(
+  ProductController c, {
+  required bool useTwoColumns,
+}) {
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      color: cardColor,
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.03),
+          blurRadius: 10,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.info_outline,
+              color: primaryColor,
+              size: 22,
             ),
-          );
-        },
-      ),
-    );
-  }
+            const SizedBox(width: 8),
+            const Expanded(
+              child: Text(
+                "التفاصيل الأساسية",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF264653),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 20),
+
+        if (useTwoColumns)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: _buildTextField(
+                  controller: nameController,
+                  label: "اسم المنتج",
+                  icon: Icons.shopping_bag_outlined,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: _buildTextField(
+                  controller: priceController,
+                  label: "السعر",
+                  icon: Icons.attach_money_rounded,
+                  isNumber: true,
+                ),
+              ),
+            ],
+          )
+        else ...[
+          _buildTextField(
+            controller: nameController,
+            label: "اسم المنتج",
+            icon: Icons.shopping_bag_outlined,
+          ),
+          const SizedBox(height: 16),
+          _buildTextField(
+            controller: priceController,
+            label: "السعر",
+            icon: Icons.attach_money_rounded,
+            isNumber: true,
+          ),
+        ],
+
+        const SizedBox(height: 16),
+
+        _buildTextField(
+          controller: descController,
+          label: "الوصف",
+          icon: Icons.description_outlined,
+          maxLines: 3,
+        ),
+
+        const SizedBox(height: 16),
+
+        _buildDropdown(c),
+      ],
+    ),
+  );
+}
+Widget _buildImagesCard(
+  ProductController c, {
+  required int crossAxisCount,
+}) {
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      color: cardColor,
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.03),
+          blurRadius: 10,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.image_outlined,
+              color: primaryColor,
+              size: 22,
+            ),
+            const SizedBox(width: 8),
+            const Expanded(
+              child: Text(
+                "صور المنتج",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF264653),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 4,
+              ),
+              decoration: BoxDecoration(
+                color: primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                "حتى 3 صور",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 8),
+
+        const Text(
+          "الصورة الأولى ستكون هي الرئيسية، انقر للإضافة",
+          style: TextStyle(
+            fontSize: 13,
+            color: Colors.grey,
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 3,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1,
+          ),
+          itemBuilder: (context, index) {
+            final file = c.imageFiles[index];
+
+            final String? oldUrl =
+                isEdit && index < product!.images.length
+                    ? product!.images[index]
+                    : null;
+
+            return _buildImagePicker(
+              c,
+              index,
+              file,
+              oldUrl,
+            );
+          },
+        ),
+      ],
+    ),
+  );
+}
 
   // تصميم الهيدر لزر إدارة الطلبات
   Widget _buildAdminHeader() {
@@ -268,7 +395,7 @@ class AddProductPage extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                ),
+                ),textAlign: TextAlign.center,
               ),
             ),
             const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18),

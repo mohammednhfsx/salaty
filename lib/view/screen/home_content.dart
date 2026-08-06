@@ -334,7 +334,7 @@ class HomeContent extends StatelessWidget {
                             ),
                             onSelected: (value) {
                               if (value == 'edit') {
-                                Get.to(() => AddProductPage(product: product));
+                                Get.to(() => Admin(product: product));
                               } else if (value == 'delete') {
                                 _showDeleteDialog(product.id!);
                               }

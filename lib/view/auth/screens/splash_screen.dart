@@ -1,7 +1,7 @@
-import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salaty/controller/auth/auth_controller.dart';
+import 'package:salaty/core/constant/route.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,56 +10,85 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-// أضفنا SingleTickerProviderStateMixin للتعامل مع الحركات (Animations)
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
 
+  final AuthController authController = Get.find<AuthController>();
+
   @override
   void initState() {
     super.initState();
-    
-    // 1. إعداد المتحكم بالحركة بمدة ثانية ونصف
+
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     );
 
-    // 2. إعداد حركة التكبير (تبدأ من النصف وتصل للحجم الطبيعي مع حركة ارتدادية)
-    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(
+      begin: 0.5,
+      end: 1.0,
+    ).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Curves.easeOutBack, 
+        curve: Curves.easeOutBack,
       ),
     );
 
-    // 3. إعداد حركة الظهور التدريجي (من الشفافية التامة للوضوح)
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeIn,
       ),
     );
 
-    // 4. تشغيل الحركة فور فتح الشاشة
     _animationController.forward();
 
-    // 5. المؤقت الخاص بالانتقال (3 ثواني)
-    Timer(const Duration(seconds: 3), () {
-      final user = FirebaseAuth.instance.currentUser;
+    // فحص المستخدم بعد ظهور شاشة البداية
+    checkUser();
+  }
 
-      if (user == null) {
-        Get.offNamed("/login");
-      } else {
-        Get.offNamed("/homepage");
-      }
-    });
+  Future<void> checkUser() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    final user = authController.auth.currentUser;
+
+    // لا يوجد مستخدم مسجل
+    if (user == null) {
+      Get.offAllNamed(AppRoutes.login);
+      return;
+    }
+
+    // تحديث بيانات Firebase Auth
+    await user.reload();
+
+    final refreshedUser = authController.auth.currentUser;
+
+    // منع المستخدم غير المؤكد من الدخول
+    if (refreshedUser == null || !refreshedUser.emailVerified) {
+      await authController.auth.signOut();
+      Get.offAllNamed(AppRoutes.login);
+      return;
+    }
+
+    // جلب role من Firestore
+    await authController.getUserData();
+
+    // تحديد الصفحة حسب صلاحية المستخدم
+    if (authController.isAdmin) {
+      Get.offAllNamed(AppRoutes.Admin);
+    } else {
+      Get.offAllNamed(AppRoutes.homepage);
+    }
   }
 
   @override
   void dispose() {
-    // تنظيف المتحكم بالحركة عند الخروج من الشاشة لتجنب استهلاك الذاكرة
     _animationController.dispose();
     super.dispose();
   }
@@ -72,20 +101,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // تطبيق حركتي التلاشي والتكبير على الشعار
             FadeTransition(
               opacity: _fadeAnimation,
               child: ScaleTransition(
                 scale: _scaleAnimation,
                 child: const Image(
-                  height: 120, // كبرنا الشعار قليلاً ليكون أوضح
+                  height: 120,
                   image: AssetImage("assets/images/logo12.png"),
                 ),
               ),
             ),
-            const SizedBox(height: 40), // مسافة بين الشعار ومؤشر التحميل
-            
-            // مؤشر تحميل يظهر مع نفس الحركة ليعطي إيحاء بالتفاعل
+
+            const SizedBox(height: 40),
+
             FadeTransition(
               opacity: _fadeAnimation,
               child: const SizedBox(
@@ -93,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 height: 25,
                 child: CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  color: Color(0xFF009688), // لون مقارب للون الأيقونة المرفقة بالصورة (Teal)
+                  color: Color(0xFF009688),
                 ),
               ),
             ),

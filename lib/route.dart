@@ -1,7 +1,10 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:salaty/Admin/admin.dart';
-import 'package:salaty/Admin/admin_order.dart';
+
 import 'package:salaty/core/constant/route.dart';
+import 'package:salaty/bindings/admin_orders_binding.dart';
+import 'package:salaty/Admin/admin_orders_screen.dart';
+
 
 import 'package:salaty/view/auth/fogotPassword/resetpassword.dart';
 import 'package:salaty/view/auth/fogotPassword/success_resetpassword.dart';
@@ -20,9 +23,9 @@ import 'package:salaty/view/screen/widgets/nav_page.dart';
 import 'package:salaty/view/screen/order.dart';
 import 'package:salaty/view/screen/profile/profile.dart';
 
-List<GetPage<dynamic>>? routes = [
-    // GetPage(name: "/", page: () => LoginScreen(), ),
-  GetPage(name: "/", page: () => SplashScreen(), ),
+List<GetPage<dynamic>> routes = [
+  // GetPage(name: "/", page: () => LoginScreen(), ),
+  GetPage(name: "/", page: () => SplashScreen()),
   GetPage(name: AppRoutes.login, page: () => LoginScreen()),
   GetPage(name: AppRoutes.signUp, page: () => SignUp()),
   GetPage(name: AppRoutes.forgetPassword, page: () => ForgotPasswordScreen()),
@@ -39,14 +42,12 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.cart, page: () => Cart()),
   GetPage(name: AppRoutes.orders, page: () => Orders()),
   GetPage(name: AppRoutes.profile, page: () => Profile()),
-    GetPage(name: AppRoutes.addProductPage, page: () => AddProductPage()),
-        GetPage(name: AppRoutes.adminOrdersScreen, page: () => AdminOrdersScreen()),
-         GetPage(name: AppRoutes.checkoutScreen, page: () => CheckoutScreen()),
-                 GetPage(name: AppRoutes.notifications, page: () => NotificationsScreen()),
-                 
-         
-        
-  
-  
-  
-  ];
+  GetPage(name: AppRoutes.Admin, page: () => Admin()),
+GetPage(
+  name: AppRoutes.adminOrdersScreen,
+  page: () => const AdminOrdersScreen(),
+  binding: AdminOrdersBinding(),
+),
+  GetPage(name: AppRoutes.checkoutScreen, page: () => CheckoutScreen()),
+  GetPage(name: AppRoutes.notifications, page: () => NotificationsScreen()),
+];

@@ -2,6 +2,7 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:salaty/core/constant/route.dart';
 import 'package:salaty/core/services/notification_service.dart';
 
 class AuthController extends GetxController {
@@ -36,18 +37,41 @@ void onInit() {
   }
 
   // ================= LOGIN =================
- Future<bool> login(String email, String password) async {
+ // ================= LOGIN =================
+Future<bool> login(String email, String password) async {
   try {
-    await auth.signInWithEmailAndPassword(email: email, password: password);
-    
-    bool verified = await checkEmailVerification();
-    if (!verified) return false; // ← لا يدخل إذا ما أكد
-    
+    await auth.signInWithEmailAndPassword(
+      email: email.trim(),
+      password: password,
+    );
+
+    final bool verified = await checkEmailVerification();
+
+    if (!verified) {
+      return false;
+    }
+
+    // ننتظر تحميل بيانات المستخدم ومعرفة نوع الحساب
     await getUserData();
-     NotificationService().saveToken();
+
+    await NotificationService().saveToken();
+
     update();
-    
+
+    // توجيه المستخدم حسب الصلاحية
+   if (isAdmin) {
+  Get.offAllNamed(AppRoutes.Admin);
+} else {
+  Get.offAllNamed(AppRoutes.homepage);
+}
+
     return true;
+  } on FirebaseAuthException catch (e) {
+    Get.snackbar(
+      "Login Error",
+      e.message ?? "حدث خطأ أثناء تسجيل الدخول",
+    );
+    return false;
   } catch (e) {
     Get.snackbar("Error", e.toString());
     return false;
@@ -95,28 +119,32 @@ Future<bool> checkEmailVerification() async {
 
     // ================= get data user =================
 
-   Future<void> getUserData() async {
+  Future<void> getUserData() async {
   try {
-    if (auth.currentUser == null) return;
+    final User? currentUser = auth.currentUser;
 
-    String uid = auth.currentUser!.uid;
+    if (currentUser == null) return;
 
-    DocumentSnapshot doc =
-        await firestore.collection("users").doc(uid).get();
+    final DocumentSnapshot<Map<String, dynamic>> doc = await firestore
+        .collection("users")
+        .doc(currentUser.uid)
+        .get();
 
-    if (doc.exists) {
-      userName = doc['name'];
-      userEmail = doc['email'];
+    if (!doc.exists) return;
 
-      if(doc['role']=='admin'){
-        isAdmin=true;
-      }else{isAdmin=false;}
-      update();
-    }
+    final Map<String, dynamic>? userData = doc.data();
+
+    if (userData == null) return;
+
+    userName = userData['name'] as String?;
+    userEmail = userData['email'] as String?;
+
+    // الأدمن يشاهد لوحة الأدمن فقط
+    isAdmin = userData['role'] == 'admin';
+
+    update();
   } catch (e) {
-    Future.delayed(Duration(milliseconds: 300), () {
-      Get.snackbar("Error", e.toString());
-    });
+    Get.snackbar("Error", e.toString());
   }
 }
 

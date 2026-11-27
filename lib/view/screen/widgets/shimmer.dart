@@ -19,7 +19,7 @@ class ProductShimmer extends StatelessWidget {
       itemCount: 4, // 4 كاردات وهمية
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
+          baseColor: const Color.fromARGB(255, 247, 244, 244)!,
           highlightColor: Colors.grey[100]!,
           child: Container(
             decoration: BoxDecoration(

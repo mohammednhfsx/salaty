@@ -1,3 +1,5 @@
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/controller/cart/cart_controller.dart';
@@ -128,25 +130,28 @@ class ProductDetails extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(16),
-                          child: Image.network(
-                            product.images[index],
+                          child: CachedNetworkImage(imageUrl:  product.images[index] ,
                             fit: BoxFit.contain,
-                            loadingBuilder:
-                                (context, child, loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                            // while the image is loading
+                            placeholder: (context, url) {
+                               return const Center(
+                                  child: CircularProgressIndicator(color:Colors.teal ,));
+                              
                             },
-                            errorBuilder: (_, __, ___) => const Center(
-                              child: Icon(Icons.broken_image,
-                                  size: 80, color: Colors.grey),
-                            ),
+                          //if the image Fails to load
+                          errorWidget: (context, url, error) {
+                       return Image(image: AssetImage("assets/images/22100c69-af75-4b19-977a-55c20bbefb4e.webp"));
+                            
+                          },
+                         
                           ),
                         );
                       },
                     ),
                   ),
                 ),
+
+
 
                 // Dots
                 if (product.images.length > 1)

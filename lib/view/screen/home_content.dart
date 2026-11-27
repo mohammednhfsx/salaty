@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salaty/Admin/admin.dart';
@@ -274,29 +275,42 @@ class HomeContent extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: Image.network(
-                          product.image,
-                          fit: BoxFit.contain,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return const Center(
-                              child: SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF009688)),
-                              ),
-                            );
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Center(
-                              child: Icon(
-                                Icons.broken_image_rounded,
-                                size: 40,
-                                color: Colors.grey,
-                              ),
-                            );
-                          },
-                        ),
+                        child:CachedNetworkImage(
+        imageUrl:  product.image,
+       placeholder: (context, url) {
+                               return const Center(
+                                  child: CircularProgressIndicator(color:Colors.teal ,));
+                              
+                            },
+                          //if the image Fails to load
+                          errorWidget: (context, url, error) {
+                       return Image(image: AssetImage("assets/images/22100c69-af75-4b19-977a-55c20bbefb4e.webp"));
+  })
+                        
+                        
+                        
+                        
+                        
+                        
+                        // Image.network(
+                        //   product.image,
+                        //   fit: BoxFit.contain,
+                        //   loadingBuilder: (context, child, loadingProgress) {
+                        //     if (loadingProgress == null) return child;
+                        //     return const Center(
+                        //       child: SizedBox(
+                        //         height: 24,
+                        //         width: 24,
+                        //         child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF009688)),
+                        //       ),
+                        //     );
+                        //   },
+                        //   errorBuilder: (context, error, stackTrace) {
+                        //     return const Center(
+                        //       child:   Image(image: AssetImage("assets/images/22100c69-af75-4b19-977a-55c20bbefb4e.webp")),
+                        //     );
+                        //   },
+                        // ),
                       ),
                     ),
                   ),

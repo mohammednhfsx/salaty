@@ -13,9 +13,8 @@ class AppRoutes {
   static const String orders = "/orders";
   static const String profile = "/profile";
   static const String addProductPage = "/AddProductPage";
-   static const String adminOrdersScreen = "/adminOrdersScreen";
-     static const String checkoutScreen = "/CheckoutScreen";
-      static const String notifications = "/NotificationsScreen";
-      
-  
+  static const String adminOrdersScreen = "/adminOrdersScreen";
+  static const String checkoutScreen = "/CheckoutScreen";
+  static const String notifications = "/NotificationsScreen";
+  static const String Admin = "/admin";
 }
